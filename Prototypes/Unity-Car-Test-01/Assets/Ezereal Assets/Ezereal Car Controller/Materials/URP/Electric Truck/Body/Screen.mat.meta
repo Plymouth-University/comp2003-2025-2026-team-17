@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ad87c86f68bd6fb4e92cab0374ae2c91
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Materials/URP/Electric
+    Truck/Body/Screen.mat
+  uploadId: 724771

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 53e22f707fdef9d4bb43a2b34eb26a7a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Materials/URP/Electric
+    Truck/Body/Under Car.mat
+  uploadId: 724771

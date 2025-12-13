@@ -1,0 +1,7 @@
+Not sure how to place bed rack evenly?
+
+Use this exact coordinates when the rack is parented to the truck's main GameObject:
+
+X: 0
+Y: 1.251791
+Z: -1.568596

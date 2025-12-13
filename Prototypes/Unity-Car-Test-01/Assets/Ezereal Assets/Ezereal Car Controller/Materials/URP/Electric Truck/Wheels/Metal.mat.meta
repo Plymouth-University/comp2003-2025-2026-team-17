@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 54f13e5d1235bc444898789ba853a031
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Materials/URP/Electric
+    Truck/Wheels/Metal.mat
+  uploadId: 724771

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 90318c1ce24007348bfeeafa3f06a0d9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Materials/URP/Demo Scene/Skybox
+    - Day.mat
+  uploadId: 724771

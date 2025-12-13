@@ -1,0 +1,36 @@
+To get started, please confirm that you have these packages installed:
+
+--- Input System ---
+
+Already included in Unity 6 templates.
+Used for Active Input Handling.
+Version 1.11.2 or newer.
+Required for vehicle control.
+
+--- Cinemachine (3.1.2 or newer) ---
+
+Used for camera controls.
+Please keep in mind that in order to install the latest version you need Unity 6+. 
+This can be ignored if you will make your own camera and it's controls, or you use older versions of Unity Editor (2021-2023).
+Make sure that the version is 3.1.2 or newer.
+Mostly because after 3.0 version Cinemachine got huge overhaul, and older versions use different components and won't be supported.
+
+--- TextMeshPro ---
+
+Already included in Unity, only essential resources required.
+Used for speed and current gear display on dashboard and overlay UI.
+
+How to import TextMeshPro essential resources:
+Window > TextMeshPro > Import TMP Essential Resources.
+___________________________________________________________________________
+
+How to use in my projects?
+
+Simply drag and drop the "Electric Truck - Ready To Drive" prefab from the main Prefab folder into your scene.
+Or use different prefabs depending on your needs in "More Prefabs" folder
+
+If you encounter any issues, please confirm that you have installed all required packages.
+If the problem persists, contact me at support@ezereal.net.
+For feedback, feel free to leave a review on the Asset Store page.
+
+Thank you for downloading this free asset. Enjoy using it and have fun creating! - WeanWind (also known as Andrew Ezereal)

@@ -1,0 +1,245 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1884117570773686498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6839284148135959519}
+  - component: {fileID: 6980379260135674757}
+  - component: {fileID: 1956051112731766471}
+  - component: {fileID: 173393837176477493}
+  - component: {fileID: 459796504328950817}
+  - component: {fileID: 5760719084374414664}
+  - component: {fileID: 6353289399275090804}
+  - component: {fileID: 8781088153207173696}
+  m_Layer: 0
+  m_Name: Ezereal Car Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6839284148135959519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884117570773686498}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.49947944, y: 0.9505424, z: 0.27362385}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6980379260135674757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884117570773686498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 67d1239777fa0e944b8dee2f1d7df18d, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Car
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1956051112731766471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884117570773686498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46348285f23b1144dad9e361a04831c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ezerealLightController: {fileID: 173393837176477493}
+  ezerealSoundController: {fileID: 459796504328950817}
+  ezerealWheelFrictionController: {fileID: 6353289399275090804}
+  vehicleRB: {fileID: 0}
+  frontLeftWheelCollider: {fileID: 0}
+  frontRightWheelCollider: {fileID: 0}
+  rearLeftWheelCollider: {fileID: 0}
+  rearRightWheelCollider: {fileID: 0}
+  frontLeftWheelMesh: {fileID: 0}
+  frontRightWheelMesh: {fileID: 0}
+  rearLeftWheelMesh: {fileID: 0}
+  rearRightWheelMesh: {fileID: 0}
+  steeringWheel: {fileID: 0}
+  currentGearTMP_UI: {fileID: 0}
+  currentGearTMP_Dashboard: {fileID: 0}
+  currentSpeedTMP_UI: {fileID: 0}
+  currentSpeedTMP_Dashboard: {fileID: 0}
+  accelerationSlider: {fileID: 0}
+  isStarted: 1
+  maxForwardSpeed: 200
+  maxReverseSpeed: 30
+  horsePower: 1000
+  brakePower: 2000
+  handbrakeForce: 3000
+  maxSteerAngle: 30
+  steeringSpeed: 5
+  stopThreshold: 1
+  decelerationSpeed: 0.5
+  maxSteeringWheelRotation: 100
+  driveType: -1
+  currentGear: 1
+  stationary: 1
+  currentSpeed: 0
+  currentAccelerationValue: 0
+  currentBrakeValue: 0
+  currentHandbrakeValue: 0
+  currentSteerAngle: 0
+  targetSteerAngle: 0
+  FrontLeftWheelRPM: 0
+  FrontRightWheelRPM: 0
+  RearLeftWheelRPM: 0
+  RearRightWheelRPM: 0
+  speedFactor: 0
+--- !u!114 &173393837176477493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884117570773686498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bf8a03c20efa549a4537d8810b36f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBeam: 0
+  lowBeamHeadlights:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  highBeamHeadlights:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  lowBeamSpotlights:
+  - {fileID: 0}
+  - {fileID: 0}
+  highBeamSpotlights:
+  - {fileID: 0}
+  - {fileID: 0}
+  rearLights:
+  - {fileID: 0}
+  - {fileID: 0}
+  brakeLights:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  handbrakeLight:
+  - {fileID: 0}
+  reverseLights:
+  - {fileID: 0}
+  - {fileID: 0}
+  leftTurnLights:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rightTurnLights:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  miscLights:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  lightBlinkDelay: 0.5
+  leftTurnActive: 0
+  rightTurnActive: 0
+  hazardLightsActive: 0
+--- !u!114 &459796504328950817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884117570773686498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5707f3d444e74e448b0300d63ac53576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useSounds: 0
+  ezerealCarController: {fileID: 1956051112731766471}
+  tireAudio: {fileID: 0}
+  engineAudio: {fileID: 0}
+  maxVolume: 0.3
+  alreadyPlaying: 0
+--- !u!114 &5760719084374414664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884117570773686498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d59b8a05cc67b0641bbac1890922fab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCameraView: 1
+  cameras:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &6353289399275090804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884117570773686498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79775ea9db4b154197558aa8e4b2d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ezerealCarController: {fileID: 1956051112731766471}
+--- !u!114 &8781088153207173696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884117570773686498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed10bb776776ed4093c534cf60bd0f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
