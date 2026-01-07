@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 52b5949a60e38b04891f4d447df956f5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Materials/URP/Electric
+    Truck/Lights/White Light.mat
+  uploadId: 724771

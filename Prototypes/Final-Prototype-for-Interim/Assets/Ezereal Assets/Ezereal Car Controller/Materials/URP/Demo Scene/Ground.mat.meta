@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 98fc05d8b8ccaab40a90eef7827d137a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Materials/URP/Demo Scene/Ground.mat
+  uploadId: 724771

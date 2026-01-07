@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 60073513a6cf00f499cd2b4bb8eb8550
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Materials/URP/Electric
+    Truck/Interior/Interior Floor.mat
+  uploadId: 724771

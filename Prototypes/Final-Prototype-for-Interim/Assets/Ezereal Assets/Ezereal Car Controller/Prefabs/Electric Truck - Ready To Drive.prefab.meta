@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9c8b1a896405b584e99933fce51d5688
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Prefabs/Electric Truck
+    - Ready To Drive.prefab
+  uploadId: 724771

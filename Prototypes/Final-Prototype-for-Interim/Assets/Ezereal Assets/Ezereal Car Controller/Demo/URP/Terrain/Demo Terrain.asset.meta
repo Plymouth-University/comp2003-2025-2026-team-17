@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 05eb45f7a1047a94c9f74aaf88a0f81c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 15600000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302577
+  packageName: Ezereal Car Controller
+  packageVersion: 1.2.0
+  assetPath: Assets/Ezereal Assets/Ezereal Car Controller/Demo/URP/Terrain/Demo Terrain.asset
+  uploadId: 724771
