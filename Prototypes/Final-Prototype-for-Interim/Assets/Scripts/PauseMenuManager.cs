@@ -13,7 +13,7 @@ public class PauseMenuManager : MonoBehaviour
     void Update()
     {
         // Check if the player presses Escape
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             if (isPaused)
             {
@@ -29,6 +29,8 @@ public class PauseMenuManager : MonoBehaviour
 
     void PauseGame()
     {
+        Debug.Log("PauseGame function ran");
+
         // Show the cursor so we can click buttons
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -43,6 +45,7 @@ public class PauseMenuManager : MonoBehaviour
 
     void ResumeGame()
     {
+        Debug.Log("ResumeGame function ran");
         // Hide the cursor 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
