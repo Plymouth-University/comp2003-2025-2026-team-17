@@ -161,15 +161,16 @@ namespace Ezereal
 
         void OnAccelerate(InputValue accelerationValue)
         {
-            if (pedal)
-            {
-                currentAccelerationValue = -accelerationValue.Get<float>();
-            }
-            else
-            {
-                currentAccelerationValue = accelerationValue.Get<float>(); // here bla bla
-            }
-            //Debug.Log("Acceleration: " + currentAccelerationValue.ToString());
+            currentAccelerationValue = accelerationValue.Get<float>();
+            //if (pedal)
+            //{
+            //    currentAccelerationValue = -accelerationValue.Get<float>();
+            //}
+            //else
+            //{
+            //    currentAccelerationValue = accelerationValue.Get<float>(); // here bla bla
+            //}
+            Debug.Log("Acceleration: " + currentAccelerationValue.ToString());
         }
 
         //private void OnAccelerate(InputAction.CallbackContext context)
