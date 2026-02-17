@@ -21,5 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Unused/Crossroad and junction scenario.unity
     guid: 8ccbe49ab8cf17642a2ad551934a3368
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 0f445760679438444b50aff7ba6b45e5, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

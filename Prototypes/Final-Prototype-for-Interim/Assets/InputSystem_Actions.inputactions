@@ -991,6 +991,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Test",
+            "id": "696568b0-de0e-42c4-aff7-911dd96450e6",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Value",
+                    "id": "46c81625-e33b-45ca-b999-e4ffd94ee1d7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ad4d9fc5-e00a-42e1-aaaa-15e1ba9b1841",
+                    "path": "<HID::44F B696>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a138c01-c13b-4ea2-a76d-1193430276b1",
+                    "path": "<HID::44F B696>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

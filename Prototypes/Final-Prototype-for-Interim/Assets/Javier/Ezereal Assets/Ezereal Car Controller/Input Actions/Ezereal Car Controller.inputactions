@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "Ezereal Car Controller",
     "maps": [
         {
@@ -221,6 +222,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d5aa5afb-4e54-4850-997e-1bbee524aa3b",
+                    "path": "<HID::44F B696>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Steer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "60ab877d-ff46-4396-bc37-0c969e225fdc",
                     "path": "<Keyboard>/w",
                     "interactions": "",
@@ -245,6 +257,17 @@
                     "name": "",
                     "id": "c26f4032-4507-4326-a34e-e43d83594916",
                     "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b1c310e-a6c0-4af7-b582-9ef72146f785",
+                    "path": "<HID::44F B696>/rz",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
