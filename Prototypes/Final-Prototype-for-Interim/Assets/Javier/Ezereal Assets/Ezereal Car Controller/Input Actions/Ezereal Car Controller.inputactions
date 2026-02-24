@@ -53,7 +53,7 @@
                 },
                 {
                     "name": "Handbrake",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "43699df9-1a67-48a1-88a6-0e15256ffefb",
                     "expectedControlType": "",
                     "processors": "",

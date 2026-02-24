@@ -50,6 +50,9 @@ namespace Ezereal
         public float decelerationSpeed = 0.5f; // 0.5f default
         public float maxSteeringWheelRotation = 360f; // 360 for real steering wheel. 120 would be more suitable for racing.
 
+        [Header("My Settings")]
+        public bool isHandbrakeActive = false;
+
         [Header("Drive Type")]
         public DriveTypes driveType = DriveTypes.RWD;
 
@@ -295,8 +298,20 @@ namespace Ezereal
         {
             currentHandbrakeValue = handbrakeValue.Get<float>();
 
+            isHandbrakeActive = !isHandbrakeActive;
+
+            Debug.Log(currentHandbrakeValue);
+
             if (isStarted)
             {
+                /// to add togglable handbrake (similar to a real one), add a bool "toggleMode". 
+                /// Default to false to have normal controls for now. Later will default to True for realisticity
+                /// if "toggleMode" is true, then probably do the drift, but with different values so that instead of removing friction from the wheels, it increases it?
+                /// Maybe ask ChatGPT for some guidance on the overall function of fthe script. I have a feeling I need to change something in the WheelFrictionController script, too.
+
+                /*
+                 * 
+                 * ORIGINAL CODE - to reactivate this, comment out anything to do with "isHandbrakeActive" and, in the inputActions, make "Handbrake" a Value instead of a Button
                 if (currentHandbrakeValue > 0)
                 {
                     if (ezerealWheelFrictionController != null)
@@ -311,6 +326,34 @@ namespace Ezereal
                 }
                 else
                 {
+                    if (ezerealWheelFrictionController != null)
+                    {
+                        ezerealWheelFrictionController.StopDrifting();
+                    }
+
+                    if (ezerealLightController != null)
+                    {
+                        ezerealLightController.HandbrakeLightOff();
+                    }
+                }*/
+
+                if (isHandbrakeActive == true)
+                {
+                    if (ezerealWheelFrictionController != null)
+                    {
+                        ezerealWheelFrictionController.StartDrifting(currentHandbrakeValue);
+                    }
+
+                    if (ezerealLightController != null)
+                    {
+                        ezerealLightController.HandbrakeLightOn();
+                    }
+                }
+                else if (isHandbrakeActive == false)
+                {
+
+                    currentHandbrakeValue = 0f;
+
                     if (ezerealWheelFrictionController != null)
                     {
                         ezerealWheelFrictionController.StopDrifting();
