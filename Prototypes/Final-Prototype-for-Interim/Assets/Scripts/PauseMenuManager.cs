@@ -41,6 +41,9 @@ public class PauseMenuManager : MonoBehaviour
 
         //Freeze time
         Time.timeScale = 0f;
+
+        //lower ALL volume when paused
+        AudioListener.volume = 0.3f;
     }
 
     void ResumeGame()
@@ -56,6 +59,9 @@ public class PauseMenuManager : MonoBehaviour
 
         //Freeze time
         Time.timeScale = 1f;
+
+        //return ALL volume to normal when resumed
+        AudioListener.volume = 1f;
     }
 
     /// <summary>
@@ -67,10 +73,16 @@ public class PauseMenuManager : MonoBehaviour
     }
     public void OnPauseMenuLevelSelectionClicked()
     {
+        //return ALL volume to normal when switching scenes
+        AudioListener.volume = 1f;
+
         SceneManager.LoadScene("Level Selection Scene");
     }
     public void OnPauseMenuHomeClicked()
     {
+        //return ALL volume to normal when switching scenes
+        AudioListener.volume = 1f;
+
         SceneManager.LoadScene("Title Screen");
     }
 }

@@ -62,7 +62,7 @@ namespace Ezereal
         [Header("Debug Info")]
         public bool stationary = true;
         [SerializeField] float currentSpeed = 0f;
-        [SerializeField] float currentAccelerationValue = 0f;
+        [SerializeField] public float currentAccelerationValue = 0f;
         [SerializeField] float currentBrakeValue = 0f;
         [SerializeField] float currentHandbrakeValue = 0f;
         [SerializeField] float currentSteerAngle = 0f;
@@ -165,21 +165,8 @@ namespace Ezereal
         void OnAccelerate(InputValue accelerationValue)
         {
             currentAccelerationValue = accelerationValue.Get<float>();
-            //if (pedal)
-            //{
-            //    currentAccelerationValue = -accelerationValue.Get<float>();
-            //}
-            //else
-            //{
-            //    currentAccelerationValue = accelerationValue.Get<float>(); // here bla bla
-            //}
             Debug.Log("Acceleration: " + currentAccelerationValue.ToString());
         }
-
-        //private void OnAccelerate(InputAction.CallbackContext context)
-        //{
-        //    Debug.Log(context);
-        //}
 
         void Acceleration()
         {
@@ -300,7 +287,7 @@ namespace Ezereal
 
             isHandbrakeActive = !isHandbrakeActive;
 
-            Debug.Log(currentHandbrakeValue);
+            Debug.Log("Handbrake Value: " + currentHandbrakeValue);
 
             if (isStarted)
             {
@@ -472,6 +459,7 @@ namespace Ezereal
 
         private void FixedUpdate()
         {
+
             Acceleration();
 
             Braking();
