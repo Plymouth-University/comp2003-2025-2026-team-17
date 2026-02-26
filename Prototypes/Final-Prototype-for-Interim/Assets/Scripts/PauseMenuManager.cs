@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
@@ -12,18 +14,23 @@ public class PauseMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check if the player presses Escape
-        if (Input.GetKeyDown(KeyCode.P))
+        // Check if the player presses P
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+            
 
+        }
+    }
+
+    public void OnPauseGame()
+    {
+        if (isPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
         }
     }
 
