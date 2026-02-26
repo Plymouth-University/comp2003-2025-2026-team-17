@@ -18,17 +18,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_LocalPosition.x
-<<<<<<< Updated upstream
-      value: 0.4500122
-      objectReference: {fileID: 0}
-    - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.330589
-      objectReference: {fileID: 0}
-    - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 14.475768
-=======
       value: 6.423401
       objectReference: {fileID: 0}
     - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
@@ -38,7 +27,15 @@ PrefabInstance:
     - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_LocalPosition.z
       value: 14.008422
->>>>>>> Stashed changes
+      value: 6.423401
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.2527957
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.008422
       objectReference: {fileID: 0}
     - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_LocalRotation.w
@@ -55,22 +52,6 @@ PrefabInstance:
     - target: {fileID: 1339649633832005654, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.03526779
-      objectReference: {fileID: 0}
-    - target: {fileID: 1344273529761774449, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: tireAudio
-      value: 
-      objectReference: {fileID: 8486923714786945599}
-    - target: {fileID: 1344273529761774449, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: useSounds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1344273529761774449, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: engineAudio
-      value: 
-      objectReference: {fileID: 8700505283080735052}
-    - target: {fileID: 1344273529761774449, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: enginePitchValue
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1352250864031435371, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: FollowOffset.x
@@ -183,21 +164,6 @@ PrefabInstance:
     - target: {fileID: 5508729196543395354, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_Name
       value: '[UK] Electric Truck - Ready To Drive UK Variant'
-<<<<<<< Updated upstream
-      objectReference: {fileID: 0}
-    - target: {fileID: 5646176738033914504, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: m_Pitch
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5646176738033914504, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: m_Resource
-      value: 
-      objectReference: {fileID: 8300000, guid: dd2e312e1fea82b46b9743437db94e68, type: 3}
-    - target: {fileID: 5646176738033914504, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 0
-=======
->>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 5967076079620788139, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_LocalPosition.x
@@ -449,18 +415,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-<<<<<<< Updated upstream
-  m_SourcePrefab: {fileID: 100100000, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
---- !u!82 &8486923714786945599 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 4837645029861028347, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-  m_PrefabInstance: {fileID: 3955665297133411268}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &8700505283080735052 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5646176738033914504, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
-  m_PrefabInstance: {fileID: 3955665297133411268}
-=======
   m_SourcePrefab: {fileID: 100100000, guid: 2e40f626bcd96744c9be3a9a76aa7aa3, type: 3}
 --- !u!224 &3785889590388521004 stripped
 RectTransform:
@@ -471,5 +425,4 @@ RectTransform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 773631285908329124, guid: 2e40f626bcd96744c9be3a9a76aa7aa3, type: 3}
   m_PrefabInstance: {fileID: 7693879362512615494}
->>>>>>> Stashed changes
   m_PrefabAsset: {fileID: 0}
