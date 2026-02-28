@@ -9,7 +9,7 @@ namespace Ezereal
         [SerializeField] EzerealCarController ezerealCarController;
         [SerializeField] AudioSource tireAudio;
         [SerializeField] public AudioSource engineAudio;
-        [SerializeField] float enginePitchValue = 1.5f;
+        [SerializeField] float enginePitchValue = 1f;
 
         [Header("Settings")]
         public float maxVolume = 0.5f; // Maximum volume for high speeds
@@ -113,7 +113,7 @@ namespace Ezereal
                     //Engine Volume
 
                     // Determine our target volume based on if the car is started
-                    float targetEngineVolume = ezerealCarController.isStarted ? 0.3f : 0f;
+                    float targetEngineVolume = ezerealCarController.isStarted ? 0.15f : 0f;
                     
                     // Smoothly transition the volume (adjust '5f' to make the fade faster or slower)
                     engineAudio.volume = Mathf.Lerp(engineAudio.volume, targetEngineVolume, Time.deltaTime * 5f);
