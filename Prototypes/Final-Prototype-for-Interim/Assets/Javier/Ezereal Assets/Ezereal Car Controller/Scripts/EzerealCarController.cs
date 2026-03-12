@@ -59,6 +59,17 @@ namespace Ezereal
         [Header("Gearbox")]
         public AutomaticGears currentGear = AutomaticGears.Drive;
 
+        // ********* Added piece of code for gear selection by frank and Javier. This is for the temporary solution, which will be replaced by the actual physical stick input in the future. ***********
+        // Add these boolean trackers near the top of your script with your other variables
+        [Header("Gear States")]
+        public bool isDriveInputActive = false;
+        public bool isReverseInputActive = false;
+
+        // ********************** NEW: Direct references to the Input System Actions ---
+        [Header("Input Action References")]
+        public InputActionReference driveGearAction;
+        public InputActionReference reverseGearAction;
+
         [Header("Debug Info")]
         public bool stationary = true;
         [SerializeField] float currentSpeed = 0f;
@@ -407,51 +418,153 @@ namespace Ezereal
             }
         }
 
-        void OnDownShift()
+        //void OnDownShift()
+        //{
+        //    switch (currentGear)
+        //    {
+        //        case AutomaticGears.Reverse:
+        //            //Debug.Log("Reverse, can't go any lower");
+        //            break;
+
+        //        case AutomaticGears.Neutral:
+        //            currentGear--;
+        //            UpdateGearText("R");
+        //            if (isStarted && ezerealLightController != null)
+        //            {
+        //                ezerealLightController.ReverseLightsOn();
+        //            }
+        //            break;
+
+        //        case AutomaticGears.Drive:
+        //            currentGear--;
+        //            UpdateGearText("N");
+        //            break;
+        //    }
+        //}
+
+        //void OnUpShift()
+        //{
+        //    switch (currentGear)
+        //    {
+        //        case AutomaticGears.Reverse:
+        //            currentGear++;
+        //            UpdateGearText("N");
+
+        //            if (isStarted && ezerealLightController != null)
+        //            {
+        //                ezerealLightController.ReverseLightsOff();
+        //            }
+
+        //            break;
+        //        case AutomaticGears.Neutral:
+        //            currentGear++;
+        //            UpdateGearText("D");
+        //            break;
+        //        case AutomaticGears.Drive:
+        //            //Debug.Log("Drive, can't go any higher");
+        //            break;
+        //    }
+        //}
+
+
+        //// TEMPORARY SOLUTION TO GEAR SELECTION
+
+
+        //// ------------------------------------------------------------------
+
+        //// Replace OnUpShift and OnDownShift with these methods:
+
+        //void OnGearDrive(InputValue value)
+        //{
+        //    // value.isPressed will be TRUE when the stick enters Gear 1
+        //    // It will automatically become FALSE when the stick leaves Gear 1
+        //    isDriveInputActive = value.isPressed;
+        //    EvaluateGearState();
+        //}
+
+        //void OnGearReverse(InputValue value)
+        //{
+        //    // value.isPressed will be TRUE when the stick enters Reverse
+        //    // It will automatically become FALSE when the stick leaves Reverse
+        //    isReverseInputActive = value.isPressed;
+        //    EvaluateGearState();
+        //}
+
+        //void EvaluateGearState()
+        //{
+        //    // 1. Check if the physical stick is currently in the Drive (Gear 1) slot
+        //    if (isDriveInputActive)
+        //    {
+        //        currentGear = AutomaticGears.Drive;
+        //        UpdateGearText("D");
+
+        //        if (isStarted && ezerealLightController != null)
+        //        {
+        //            ezerealLightController.ReverseLightsOff();
+        //        }
+        //    }
+        //    // 2. Check if the physical stick is currently in the Reverse slot
+        //    else if (isReverseInputActive)
+        //    {
+        //        currentGear = AutomaticGears.Reverse;
+        //        UpdateGearText("R");
+
+        //        if (isStarted && ezerealLightController != null)
+        //        {
+        //            ezerealLightController.ReverseLightsOn();
+        //        }
+        //    }
+        //    // 3. If neither slot is engaged, the stick is physically in the middle (Neutral)
+        //    else
+        //    {
+        //        currentGear = AutomaticGears.Neutral;
+        //        UpdateGearText("N");
+
+        //        if (isStarted && ezerealLightController != null)
+        //        {
+        //            ezerealLightController.ReverseLightsOff();
+        //        }
+        //    }
+        //}
+
+        void PollGearState()
         {
-            switch (currentGear)
+            // Make sure the actions are assigned in the inspector before trying to read them
+            if (driveGearAction == null || reverseGearAction == null) return;
+
+            // 1. Read the raw physical state of the buttons every frame
+            // This ignores "active devices" and just checks if the hardware button is closed/pressed
+            isDriveInputActive = driveGearAction.action.IsPressed();
+            isReverseInputActive = reverseGearAction.action.IsPressed();
+
+            // 2. Evaluate and set the gears
+            if (isDriveInputActive)
             {
-                case AutomaticGears.Reverse:
-                    //Debug.Log("Reverse, can't go any lower");
-                    break;
-
-                case AutomaticGears.Neutral:
-                    currentGear--;
-                    UpdateGearText("R");
-                    if (isStarted && ezerealLightController != null)
-                    {
-                        ezerealLightController.ReverseLightsOn();
-                    }
-                    break;
-
-                case AutomaticGears.Drive:
-                    currentGear--;
-                    UpdateGearText("N");
-                    break;
-            }
-        }
-
-        void OnUpShift()
-        {
-            switch (currentGear)
-            {
-                case AutomaticGears.Reverse:
-                    currentGear++;
-                    UpdateGearText("N");
-
-                    if (isStarted && ezerealLightController != null)
-                    {
-                        ezerealLightController.ReverseLightsOff();
-                    }
-
-                    break;
-                case AutomaticGears.Neutral:
-                    currentGear++;
+                if (currentGear != AutomaticGears.Drive)
+                {
+                    currentGear = AutomaticGears.Drive;
                     UpdateGearText("D");
-                    break;
-                case AutomaticGears.Drive:
-                    //Debug.Log("Drive, can't go any higher");
-                    break;
+                    if (isStarted && ezerealLightController != null) ezerealLightController.ReverseLightsOff();
+                }
+            }
+            else if (isReverseInputActive)
+            {
+                if (currentGear != AutomaticGears.Reverse)
+                {
+                    currentGear = AutomaticGears.Reverse;
+                    UpdateGearText("R");
+                    if (isStarted && ezerealLightController != null) ezerealLightController.ReverseLightsOn();
+                }
+            }
+            else
+            {
+                // 3. If neither slot is engaged, the stick is physically in Neutral
+                if (currentGear != AutomaticGears.Neutral)
+                {
+                    currentGear = AutomaticGears.Neutral;
+                    UpdateGearText("N");
+                    if (isStarted && ezerealLightController != null) ezerealLightController.ReverseLightsOff();
+                }
             }
         }
 
@@ -459,6 +572,11 @@ namespace Ezereal
 
         private void FixedUpdate()
         {
+
+            // --- NEW: Call the polling method every physics frame ---
+            PollGearState();
+
+
 
             Acceleration();
 

@@ -149,6 +149,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GearDrive",
+                    "type": "PassThrough",
+                    "id": "bd546f6b-911c-4e5f-a31c-1e7a1602fd4e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GearReverse",
+                    "type": "PassThrough",
+                    "id": "76338df5-5ff8-4bb6-aea6-d4e80cd547f9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -710,6 +728,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21abdb71-1968-4656-be17-2536feb38266",
+                    "path": "<HID::Thustmaster T500 RS Gear Shift>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GearDrive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "978772bb-ec40-4a0d-b8bd-b86edaeb23f0",
+                    "path": "<HID::Thustmaster T500 RS Gear Shift>/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GearReverse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1299,6 +1339,22 @@
             "devices": [
                 {
                     "devicePath": "<XRController>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "SimRig",
+            "bindingGroup": "SimRig",
+            "devices": [
+                {
+                    "devicePath": "<HID::44F B696>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<HID::Thustmaster T500 RS Gear Shift>",
                     "isOptional": false,
                     "isOR": false
                 }
