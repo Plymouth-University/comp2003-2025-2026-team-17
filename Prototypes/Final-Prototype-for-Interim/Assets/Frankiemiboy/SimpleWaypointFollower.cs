@@ -7,18 +7,28 @@ public class SimpleWaypointFollower : MonoBehaviour
     public Transform[] waypoints;
 
     [Header("Movement Settings")]
-    public float speed = 5f;
-    public float rotationSpeed = 5f;
+    public float speed = 20f;
+    public float rotationSpeed = 10f;
 
     // How close the car needs to get to the waypoint before targeting the next one
-    public float waypointThreshold = 0.5f;
+    public float waypointThreshold = 2.0f; // If you set a higher speed for your car, you must increase this threshold to prevent the car from overshooting...
+                                           // ...the waypoint and missing it entirely.
+                                           // Adjust this value based on your car's speed and the distance between waypoints for optimal performance.
+
+    // Add a layer mask so the downward raycast only hits the road, not other cars
+    [Header("Ground Detection")]
+    public LayerMask roadLayer;
+    public float raycastLength = 2f;
 
     private int currentWaypointIndex = 0;
 
     void Update()
     {
         // Safety check: Do nothing if no waypoints are assigned
-        if (waypoints.Length == 0) return;
+        if (waypoints.Length == 0) 
+        {
+            return;
+        }
 
         Transform targetWaypoint = waypoints[currentWaypointIndex];
 
@@ -54,17 +64,26 @@ public class SimpleWaypointFollower : MonoBehaviour
             }
         }
 
-        // 2. Rotate towards the target waypoint smoothly
+        // 2. Calcuate the direction to the target waypoint and rotate towards it smoothly
         Vector3 directionToTarget = targetWaypoint.position - transform.position;
 
-        // Ensure we don't calculate a rotation if we are exactly on the spot
+        // 3. Ground Detection: Cast a ray downward to check if we're on the road
+        Vector3 groundUpDirection = Vector3.up; // Default to world up if we don't hit anything
+
+        // Shoot a raycast slightly above the car's center, straight down, to check for the ground
+        Vector3 rayStart = transform.position + (Vector3.up * 0.5f);
+
+        // 4. Steer and Align (Pitch, Yaw, AND Roll): If we hit the ground, align the car's up direction with the ground normal
         if (directionToTarget != Vector3.zero)
         {
+            // LookRotatoin takes a SECOND argument: "Which way is up?"
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+            // Smoothly blend the rotation in all axes
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        // 3. Move forward continually
+        // 5. Move Forward 
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 }
