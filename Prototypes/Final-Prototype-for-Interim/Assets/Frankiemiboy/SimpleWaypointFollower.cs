@@ -12,16 +12,19 @@ public class SimpleWaypointFollower : MonoBehaviour
     public float acceleration = 5f; // How quickly the car gets up to maxSpeed from a resting state.
     public float deceleration = 10f; // How quickly the car hits the brakes (usually higher than acceleration).
     public float brakingDistance = 15f; // How far away from the final waypoint the car should start hitting the brakes.
-    
-    // --- NEW: We need a private variable to track the actual speed the wheels are turning at right now ---
-    private float currentSpeed = 0f; // Starts at 0 (from rest)
+
+    // --- Sensor settings for detecting traffic ---
+    [Header("Sensor Settings")]
+    [Tooltip("How far ahead should the car look ahead for obstacles (other vehicles)?")]
+    public float sensorLength = 10f;
+    [Tooltip("Position offset to move the sensor to the front bumper (X, Y, Z).")]
+    public Vector3 sensorOffset = new Vector3(0f, 0.5f, 2f);
+    [Tooltip("Which layers count as obstacles? (e.g., Other vehicles)")]
+    public LayerMask obstacleLayer;
+    // ------------------------------------------------
 
     [Header("Movement Settings")]
     public float rotationSpeed = 10f;
-    
-    // --- NEW: How fast the car "bounces" back to the correct height. 
-    // Higher numbers = stiffer suspension. Lower numbers = bouncy/floaty suspension. ---
-    public float suspensionSpeed = 15f;
 
     // How close the car needs to get to the waypoint before targeting the next one
     public float waypointThreshold = 2.0f; // If you set a higher speed for your car, you must increase this threshold to prevent the car from overshooting...
@@ -39,6 +42,12 @@ public class SimpleWaypointFollower : MonoBehaviour
     // This fixes the issue where the cube's pivot point causes it to spawn halfway underground. ---
     public float heightOffset = 0.5f;
 
+    // --- NEW: How fast the car "bounces" back to the correct height. 
+    // Higher numbers = stiffer suspension. Lower numbers = bouncy/floaty suspension. ---
+    public float suspensionSpeed = 15f;
+
+    // --- NEW: We need a private variable to track the actual speed the wheels are turning at right now ---
+    private float currentSpeed = 0f; // Starts at 0 (from rest)
     private int currentWaypointIndex = 0;
 
     
@@ -68,6 +77,17 @@ public class SimpleWaypointFollower : MonoBehaviour
             {
                 targetSpeed = 0f;
             }
+        }
+
+        // --- Front Bumper Sesnor Logic ---
+        // 1. Calculate the exact starting point of the sensor based on the car's current rotation
+        Vector3 sensorStartPos = transform.position + transform.TransformDirection(sensorOffset);
+
+        // 2. Shoot the raycast straight forward
+        if (Physics.Raycast(sensorStartPos, transform.forward, out RaycastHit obstacleHit, sensorLength, obstacleLayer))
+        {
+            // If we hit something on the obstacle layer, override our target speed to 0 so we brake!
+            targetSpeed = 0f;
         }
         // ----------------------------------------
 
@@ -102,6 +122,7 @@ public class SimpleWaypointFollower : MonoBehaviour
 
         // 2. Calcuate the direction to the target waypoint and rotate towards it smoothly
         Vector3 directionToTarget = targetWaypoint.position - transform.position;
+        directionToTarget.y = 0; // We only want to rotate on the X-axis (left/right), so we ignore any vertical difference between the car and the waypoint.
 
         // --- CHANGED: We raised the rayStart from 0.5f to 2.0f. ---
         // Shoot a raycast significantly higher above the car's center, straight down, to check for the ground.
@@ -153,5 +174,15 @@ public class SimpleWaypointFollower : MonoBehaviour
         // 5. Move Forward 
         // --- CHANGED: We now multiply by 'currentSpeed' instead of the fixed max speed so the car physically accelerates. ---
         transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
+    }
+
+    // --- NEW: Gizmos: For Visual Debugging Purposes ---
+    // This built-in Unity function draws shapes in the Scene view to help us see invisible math.
+    void OnDrawGizmos()
+    {
+        // Draw the front sensor as a red line
+        Vector3 sensorStartPos = transform.position + transform.TransformDirection(sensorOffset);
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(sensorStartPos, transform.forward * sensorLength);
     }
 }
