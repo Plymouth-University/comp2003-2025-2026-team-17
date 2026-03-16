@@ -9,8 +9,10 @@ public class SimpleWaypointFollower : MonoBehaviour
     // --- NEW: We changed "Movement Settings" to "Speed Settings" and added our acceleration variables ---
     [Header("Speed Settings")]
     public float maxSpeed = 20f; // This replaces the old 'speed' variable. It's the top speed the car wants to reach.
-    public float acceleration = 5f; // How quickly the car gets up to maxSpeed from a resting state.
-    public float deceleration = 10f; // How quickly the car hits the brakes (usually higher than acceleration).
+    const float MPH_TO_MS = 0.44704f;
+    public float acceleration = 5f * MPH_TO_MS; // How quickly the car gets up to maxSpeed from a resting state.
+    public float deceleration = 10f * MPH_TO_MS; // How quickly the car hits the brakes (usually higher than acceleration).
+
     public float brakingDistance = 15f; // How far away from the final waypoint the car should start hitting the brakes.
 
     // --- Sensor settings for detecting traffic ---
@@ -173,7 +175,8 @@ public class SimpleWaypointFollower : MonoBehaviour
 
         // 5. Move Forward 
         // --- CHANGED: We now multiply by 'currentSpeed' instead of the fixed max speed so the car physically accelerates. ---
-        transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
+        float speedInMetersPerSecond = currentSpeed * MPH_TO_MS;
+        transform.Translate(Vector3.forward * speedInMetersPerSecond * Time.deltaTime);
     }
 
     // --- NEW: Gizmos: For Visual Debugging Purposes ---
