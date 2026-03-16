@@ -574,6 +574,7 @@ namespace Ezereal
         {
 
             // --- NEW: Call the polling method every physics frame ---
+            // THE THING, THE THING!!
             PollGearState();
 
 
@@ -609,11 +610,11 @@ namespace Ezereal
             {
 #if UNITY_6000_0_OR_NEWER
                 currentSpeed = Vector3.Dot(vehicleRB.gameObject.transform.forward, vehicleRB.linearVelocity);
-                currentSpeed *= 3.6f;
+                currentSpeed *= 2.23694f;
                 UpdateSpeedText(currentSpeed);
 #else
                 currentSpeed = Vector3.Dot(vehicleRB.gameObject.transform.forward, vehicleRB.velocity);
-                currentSpeed *= 3.6f; 
+                currentSpeed *= 2.23694f; 
                 UpdateSpeedText(currentSpeed);
 #endif
 
