@@ -979,6 +979,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1280928039
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.5601015
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.403187
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 282657747844406866, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015834734116079719, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+      propertyPath: m_Name
+      value: '[AI] Red Civilian Car - Ready To Use - No interior 1'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 312633836398300143, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+    - {fileID: 7008548255384123878, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9c10b7e0d4f8ae14fa6475ed03eade68, type: 3}
 --- !u!4 &1371148442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 316719756909071339, guid: 1be01b1160b1a2243b35d167fe81b109, type: 3}
@@ -1337,4 +1396,5 @@ SceneRoots:
   - {fileID: 1411461847}
   - {fileID: 1535331273}
   - {fileID: 185517562}
+  - {fileID: 1280928039}
   - {fileID: 5292573468446312048}
