@@ -13,7 +13,8 @@ public class SimpleWaypointFollower : MonoBehaviour
     public float acceleration = 5f * MPH_TO_MS; // How quickly the car gets up to maxSpeed from a resting state.
     public float deceleration = 10f * MPH_TO_MS; // How quickly the car hits the brakes (usually higher than acceleration).
 
-    public float brakingDistance = 15f; // How far away from the final waypoint the car should start hitting the brakes.
+    // TEMPORARILY removed because we don't brake anymore once car has reached final waypoint
+    // public float brakingDistance = 15f; // How far away from the final waypoint the car should start hitting the brakes.
 
     // --- CHANGED: Sensor settings updated for Adaptive Cruise Control (ACC) ---
     [Header("Sensor Settings (Adaptive)")]
@@ -74,15 +75,16 @@ public class SimpleWaypointFollower : MonoBehaviour
         // Target speed is what the car WANTS to do right now. By default, it wants to go max speed.
         float targetSpeed = maxSpeed;
 
-        // Check if we are currently driving towards the very last waypoint in the array
-        if (currentWaypointIndex == waypoints.Length - 1)
-        {
-            // If we are within the braking distance of the final stop, change our target speed to 0 so we begin to slow down.
-            if (distanceToWaypoint <= brakingDistance)
-            {
-                targetSpeed = 0f;
-            }
-        }
+        // TEMPORARILY removed because we don't brake anymore once car has reached final waypoint
+        //// Check if we are currently driving towards the very last waypoint in the array
+        //if (currentWaypointIndex == waypoints.Length - 1)
+        //{
+        //    // If we are within the braking distance of the final stop, change our target speed to 0 so we begin to slow down.
+        //    if (distanceToWaypoint <= brakingDistance)
+        //    {
+        //        targetSpeed = 0f;
+        //    }
+        //}
 
         // --- CHANGED: Adaptive Front Bumper Sensor Logic based on real-world stopping distances ---
 
@@ -125,7 +127,42 @@ public class SimpleWaypointFollower : MonoBehaviour
         }
         // ----------------------------------------
 
-        // The code commented out is to automatically switch to the next waypoint when we get close enough... BUT WILL CAUSE THE CAR TO CONITNUE TO SWITCH WAYPOINTS IN A LOOP -- The loop is endless until stopped manually.
+        // --- THE TELEPORT LOOP ---
+        // This code block will teleport a car that has reached its last waypoint to...
+        // ... the beginning of the road (the first waypoint of the lane)
+        if (distanceToWaypoint < waypointThreshold)
+        {
+            if (currentWaypointIndex == waypoints.Length - 1)
+            {
+                // We've reached the absolute end of the road! 
+                // 1. Instantly teleport the car back to the exact position of Waypoint 0
+                transform.position = waypoints[0].position;
+
+                // 2. Immediately set our target to the next waypoint (Waypoint 1),
+                // this sets the direction the car is supposed to face
+                currentWaypointIndex = 1;
+                targetWaypoint = waypoints[currentWaypointIndex];
+
+                // 3. Force the car to instantly snap its rotation to face Waypoint 1
+                // Make use of raw direction math, project it on the plane so it doesn't nose-dive, and apply it instantly without Slerp
+                Vector3 directionToFirstWaypoint = targetWaypoint.position - transform.position;
+                Vector3 projectedDirection = Vector3.ProjectOnPlane(directionToFirstWaypoint, Vector3.up);
+
+                if (projectedDirection != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(projectedDirection);
+                }
+            }
+            else
+            {
+                currentWaypointIndex++;
+                targetWaypoint = waypoints[currentWaypointIndex];
+            }
+        }
+
+
+        // The code commented out is to automatically switch to the next waypoint when we get close enough...
+        // BUT WILL CAUSE THE CAR TO CONITNUE TO SWITCH WAYPOINTS IN A LOOP -- The loop is endless until stopped manually.
         //if (distanceToWaypoint < waypointThreshold)
         //{
         //    // Move to the next waypoint index. 
@@ -135,23 +172,23 @@ public class SimpleWaypointFollower : MonoBehaviour
         //}
 
         // This code will do the same thing as the above commented out code, but will stop at the last waypoint instead of looping back to the first one.
-        if (distanceToWaypoint < waypointThreshold)
-        {
-            // Move to the next waypoint index, but only if we haven't reached the last one.
-            if (currentWaypointIndex == waypoints.Length - 1)
-            {
-                // We've reached the last waypoint, so we stop the car and prevent further movement or rotation.
-                currentSpeed = 0f; // --- CHANGED: Use currentSpeed instead of the old 'speed' variable to ensure it fully stops. ---
-                rotationSpeed = 0f; // Stop the car from rotating when it reaches the last waypoint
-                return; // Exit the Update method to prevent further movement or rotation
-            }
-            else
-            {
-                // We haven't reached the last waypoint, so target the next waypoint
-                currentWaypointIndex++;
-                targetWaypoint = waypoints[currentWaypointIndex];
-            }
-        }
+        //if (distanceToWaypoint < waypointThreshold)
+        //{
+        //    // Move to the next waypoint index, but only if we haven't reached the last one.
+        //    if (currentWaypointIndex == waypoints.Length - 1)
+        //    {
+        //        // We've reached the last waypoint, so we stop the car and prevent further movement or rotation.
+        //        currentSpeed = 0f; // --- CHANGED: Use currentSpeed instead of the old 'speed' variable to ensure it fully stops. ---
+        //        rotationSpeed = 0f; // Stop the car from rotating when it reaches the last waypoint
+        //        return; // Exit the Update method to prevent further movement or rotation
+        //    }
+        //    else
+        //    {
+        //        // We haven't reached the last waypoint, so target the next waypoint
+        //        currentWaypointIndex++;
+        //        targetWaypoint = waypoints[currentWaypointIndex];
+        //    }
+        //}
 
         // 2. Calcuate the direction to the target waypoint and rotate towards it smoothly
         //Vector3 directionToTarget = targetWaypoint.position - transform.position;
