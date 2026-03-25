@@ -3,15 +3,19 @@ using UnityEngine;
 public class SimpleWaypointFollower : MonoBehaviour
 {
     [Header("Path Settings")]
-    [Tooltip("Drag your waypoint transforms here in order.")]
+    [Tooltip("LaneTrafficManager will automatically fill this with waypoints when car spawns")]
     public Transform[] waypoints;
+
+    // --- A reference back to the manager so the car can report when finished ---
+    [HideInInspector]
+    public LeftLanesTrafficManager myManager;
 
     // --- NEW: We changed "Movement Settings" to "Speed Settings" and added our acceleration variables ---
     [Header("Speed Settings")]
-    public float maxSpeed = 20f; // This replaces the old 'speed' variable. It's the top speed the car wants to reach.
+    public float maxSpeed = 35f; // This replaces the old 'speed' variable. It's the top speed the car wants to reach.
     const float MPH_TO_MS = 0.44704f;
-    public float acceleration = 5f * MPH_TO_MS; // How quickly the car gets up to maxSpeed from a resting state.
-    public float deceleration = 10f * MPH_TO_MS; // How quickly the car hits the brakes (usually higher than acceleration).
+    public float acceleration = 15f; // How quickly the car gets up to maxSpeed from a resting state.
+    public float deceleration = 15f; // How quickly the car hits the brakes (usually higher than acceleration).
 
     // TEMPORARILY removed because we don't brake anymore once car has reached final waypoint
     // public float brakingDistance = 15f; // How far away from the final waypoint the car should start hitting the brakes.
@@ -19,11 +23,11 @@ public class SimpleWaypointFollower : MonoBehaviour
     // --- CHANGED: Sensor settings updated for Adaptive Cruise Control (ACC) ---
     [Header("Sensor Settings (Adaptive)")]
     [Tooltip("The size of the radar box (Width, Height, Depth). This replaces the single thin line.")]
-    public Vector3 sensorBoxSize = new Vector3(0.9f, 0.8f, 0.2f); // Half-extents: makes a 1.8m wide, 1.6m tall box
+    public Vector3 sensorBoxSize = new Vector3(2.5f, 2.5f, 0.2f); // Half-extents: makes a 1.8m wide, 1.6m tall box
     [Tooltip("The absolute minimum distance to maintain from the car ahead before coming to a complete stop.")]
-    public float safeStoppingDistance = 4f; // 4 meters roughly equals one car length
+    public float safeStoppingDistance = 5f; // 4 meters roughly equals one car length
     [Tooltip("Position offset to move the sensor to the front bumper (X, Y, Z).")]
-    public Vector3 sensorOffset = new Vector3(0f, 0.5f, 2f);
+    public Vector3 sensorOffset = new Vector3(0f, 0.8f, 2.5f);
     [Tooltip("Which layers count as obstacles? (e.g., Other vehicles)")]
     public LayerMask obstacleLayer;
     // ------------------------------------------------
@@ -45,7 +49,7 @@ public class SimpleWaypointFollower : MonoBehaviour
 
     // --- How high above the road the center of the car should hover (0.5 is exactly half a default Unity cube). 
     // This fixes the issue where the cube's pivot point causes it to spawn halfway underground. ---
-    public float heightOffset = 0.5f;
+    public float heightOffset = 0.1f;
 
     // --- How fast the car "bounces" back to the correct height. 
     // Higher numbers = stiffer suspension. Lower numbers = bouncy/floaty suspension. ---
@@ -135,23 +139,12 @@ public class SimpleWaypointFollower : MonoBehaviour
             if (currentWaypointIndex == waypoints.Length - 1)
             {
                 // We've reached the absolute end of the road! 
-                // 1. Instantly teleport the car back to the exact position of Waypoint 0
-                transform.position = waypoints[0].position;
-
-                // 2. Immediately set our target to the next waypoint (Waypoint 1),
-                // this sets the direction the car is supposed to face
-                currentWaypointIndex = 1;
-                targetWaypoint = waypoints[currentWaypointIndex];
-
-                // 3. Force the car to instantly snap its rotation to face Waypoint 1
-                // Make use of raw direction math, project it on the plane so it doesn't nose-dive, and apply it instantly without Slerp
-                Vector3 directionToFirstWaypoint = targetWaypoint.position - transform.position;
-                Vector3 projectedDirection = Vector3.ProjectOnPlane(directionToFirstWaypoint, Vector3.up);
-
-                if (projectedDirection != Vector3.zero)
+                // Tell the manager to put us in the buffer queue.
+                if (myManager != null)
                 {
-                    transform.rotation = Quaternion.LookRotation(projectedDirection);
+                    myManager.CarFinishedRoute(this.gameObject);
                 }
+                return; // Stop running any more code this frame since we are now "asleep"
             }
             else
             {
@@ -160,18 +153,7 @@ public class SimpleWaypointFollower : MonoBehaviour
             }
         }
 
-
-        // The code commented out is to automatically switch to the next waypoint when we get close enough...
-        // BUT WILL CAUSE THE CAR TO CONITNUE TO SWITCH WAYPOINTS IN A LOOP -- The loop is endless until stopped manually.
-        //if (distanceToWaypoint < waypointThreshold)
-        //{
-        //    // Move to the next waypoint index. 
-        //    // The '%' operator loops it back to 0 when it reaches the end of the array.
-        //    // currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-        //    // targetWaypoint = waypoints[currentWaypointIndex];
-        //}
-
-        // This code will do the same thing as the above commented out code, but will stop at the last waypoint instead of looping back to the first one.
+        // Switches to next waypoint in the array and stops when reached final waypoint
         //if (distanceToWaypoint < waypointThreshold)
         //{
         //    // Move to the next waypoint index, but only if we haven't reached the last one.
@@ -190,11 +172,7 @@ public class SimpleWaypointFollower : MonoBehaviour
         //    }
         //}
 
-        // 2. Calcuate the direction to the target waypoint and rotate towards it smoothly
-        //Vector3 directionToTarget = targetWaypoint.position - transform.position;
-        //directionToTarget.y = 0; // We only want to rotate on the X-axis (left/right), so we ignore any vertical difference between the car and the waypoint.
 
-        // --- CHANGED: We raised the rayStart from 0.5f to 2.0f. ---
         // Shoot a raycast significantly higher above the car's center, straight down, to check for the ground.
         // Starting higher prevents the raycast from starting *inside* a steep hill and missing the road.
         Vector3 rayStart = transform.position + (Vector3.up * 2.0f);
@@ -207,7 +185,7 @@ public class SimpleWaypointFollower : MonoBehaviour
         {
             groundUpDirection = hitInfo.normal; // Use the normal of the ground we hit
 
-            // --- CHANGED: Fake Suspension (Smooth Y-Axis Snapping) ---
+            // --- Fake Suspension (Smooth Y-Axis Snapping) ---
             // We calculate where the car SHOULD be (the target height).
             float targetY = hitInfo.point.y + heightOffset;
             Vector3 fixedPosition = transform.position;
@@ -254,6 +232,13 @@ public class SimpleWaypointFollower : MonoBehaviour
         // --- We now multiply by 'currentSpeed' instead of the fixed max speed so the car physically accelerates. ---
         float speedInMetersPerSecond = currentSpeed * MPH_TO_MS;
         transform.Translate(Vector3.forward * speedInMetersPerSecond * Time.deltaTime);
+    }
+
+    // --- NEW: Reset Method called by the Manager when releasing from the buffer ---
+    public void ResetToStart()
+    {
+        currentWaypointIndex = 0;
+        currentSpeed = 0f; // Reset speed to 0 so the car smoothly accelerates off the starting line again
     }
 
     // --- Gizmos: For Visual Debugging Purposes ---
