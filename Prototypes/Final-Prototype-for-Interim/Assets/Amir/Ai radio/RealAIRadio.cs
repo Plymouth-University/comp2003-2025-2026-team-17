@@ -9,19 +9,12 @@ public class RealAIRadio : MonoBehaviour
     public AudioSource carSpeakers;
 
     // Paste your free Hugging Face token here inside the quotes!
-    private string hfToken = "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";
+    private string hfToken = "";
 
     // The endpoint for Meta's free MusicGen model
     private string apiUrl = "https://api-inference.huggingface.co/models/facebook/musicgen-small";
 
-    void Update()
-    {
-        // When you press the 'R' key, turn on the radio
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            TurnOnRadio();
-        }
-    }
+    // -- UPDATE: Removed Update() method so that the radio is only called by the EzrealCarController script when the player presses the button to turn on the radio.
 
     public void TurnOnRadio()
     {
