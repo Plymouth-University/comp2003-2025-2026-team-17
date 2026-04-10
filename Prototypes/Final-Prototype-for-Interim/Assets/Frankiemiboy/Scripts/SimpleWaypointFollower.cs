@@ -8,7 +8,7 @@ public class SimpleWaypointFollower : MonoBehaviour
 
     // --- A reference back to the manager so the car can report when finished ---
     [HideInInspector]
-    public LeftLanesTrafficManager myManager;
+    public LaneTrafficManager myManager;
 
     // --- NEW: We changed "Movement Settings" to "Speed Settings" and added our acceleration variables ---
     [Header("Speed Settings")]
