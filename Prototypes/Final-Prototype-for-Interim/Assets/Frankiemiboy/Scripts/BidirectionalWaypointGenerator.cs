@@ -24,6 +24,17 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
     [Tooltip("How high above the calculated point we start the raycast to shoot down.")]
     public float raycastStartHeight = 5f;
 
+    // Settings for the LaneTrafficManager added to each lane
+    [Header("Traffic Manager Settings (Auto-Assigned)")]
+    [Tooltip("The AI Car prefab to assign to the generated LaneTrafficManagers.")]
+    public GameObject defaultCarPrefab;
+    [Tooltip("How many cars should each lane maintain?")]
+    public int defaultTargetCarCount = 5;
+    [Tooltip("Minimum time (in seconds) between releasing cars.")]
+    public float defaultSpawnInterval = 3f;
+    [Tooltip("Which layer holds your vehicles? (Used for spawn clearance checks).")]
+    public LayerMask defaultObstacleLayer;
+
     [ContextMenu("Generate Bidirectional Waypoints")]
     public void GenerateWaypoints()
     {
@@ -34,7 +45,7 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         }
 
         // --- STEP 1: SET UP THE FOLDER HIERARCHY ---
-        // We create a clean hierarchy to prevent hundreds of waypoints from cluttering your scene
+        // Create a clean hierarchy to prevent hundreds of waypoints from cluttering your scene
         GameObject mainParent = new GameObject(roadSpline.gameObject.name + "_Bidirectional_WPs");
 
         GameObject leftSideParent = new GameObject("Left_Side_Forward");
@@ -49,9 +60,12 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
 
         for (int i = 0; i < lanesPerSide; i++)
         {
+            // The left lane folder
+            // GameObject leftLaneObj = new GameObject("Lane_L" + i);
             leftLaneFolders[i] = new GameObject("Lane_L" + i).transform;
             leftLaneFolders[i].SetParent(leftSideParent.transform);
 
+            //GameObject rightLaneObj = new GameObject("Lane_R" + i);
             rightLaneFolders[i] = new GameObject("Lane_R" + i).transform;
             rightLaneFolders[i].SetParent(rightSideParent.transform);
         }
@@ -62,7 +76,7 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         // --- STEP 2: PASS 1 (LEFT SIDE / FORWARD TRAFFIC) ---
         // We walk from 0 to the end of the road.
         int leftIndex = 0;
-        for (float currentDist = 0; currentDist <= totalLength; currentDist += distanceBetweenWaypoints)
+        for (float currentDist = 5.0f; currentDist <= totalLength; currentDist += distanceBetweenWaypoints)
         {
             float t = currentDist / totalLength;
 
@@ -89,7 +103,7 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         // --- STEP 3: PASS 2 (RIGHT SIDE / ONCOMING TRAFFIC) ---
         // We start at the totalLength (the end) and walk BACKWARDS down to 0.
         int rightIndex = 0;
-        for (float currentDist = totalLength; currentDist >= 0; currentDist -= distanceBetweenWaypoints)
+        for (float currentDist = totalLength - 5.0f; currentDist >= 0; currentDist -= distanceBetweenWaypoints)
         {
             float t = currentDist / totalLength;
 
@@ -115,6 +129,19 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
             rightIndex++;
         }
 
+        for (int i = 0; i < lanesPerSide; i++)
+        {
+            if (leftLaneFolders[i] != null)
+            {
+                AttachTrafficManager(leftLaneFolders[i].gameObject);
+            }
+
+            if (rightLaneFolders[i] != null)
+            {
+                AttachTrafficManager(rightLaneFolders[i].gameObject);
+            }
+        }
+
         Debug.Log($"Bidirectional generation complete! Left Forward WPs: {leftIndex} | Right Oncoming WPs: {rightIndex}");
     }
 
@@ -136,5 +163,18 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         {
             Debug.LogWarning($"Waypoint {objectName} missed the road mesh at position: {rawPosition}. Check your Raycast Start Height or Layer Mask.");
         }
+    }
+
+    // Helper function to add and configure a LaneTrafficManager on a given lane GameObject
+    private void AttachTrafficManager(GameObject laneObject)
+    {
+        // AddComponent physically glues the script to the target GameObject
+        LaneTrafficManager manager = laneObject.AddComponent<LaneTrafficManager>();
+
+        // Pass the settings from the Generator down into the newly created Manager
+        manager.carPrefab = defaultCarPrefab;
+        manager.targetCarCount = defaultTargetCarCount;
+        manager.spawnInterval = defaultSpawnInterval;
+        manager.obstacleLayer = defaultObstacleLayer;
     }
 }
