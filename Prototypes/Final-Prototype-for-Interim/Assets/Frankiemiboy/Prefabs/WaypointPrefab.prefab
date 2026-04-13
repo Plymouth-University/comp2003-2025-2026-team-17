@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5729169235395571759}
   - component: {fileID: 718851993935914024}
   - component: {fileID: 3401477440240499828}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WaypointPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}

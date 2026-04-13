@@ -146,7 +146,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
-    - _Cutoff: 1
+    - _Cutoff: 0.5
     - _DecalColoring: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -171,7 +171,7 @@ Material:
     - _Reflection: 0
     - _ShadowIntensity: 0.6
     - _Shininess: 0.03020274
-    - _Smoothness: 0.247
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _Sparkle: 0.01
     - _SpecularHighlights: 1
@@ -198,7 +198,7 @@ Material:
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &4535559036789788753
+--- !u!114 &7359111490283161338
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
