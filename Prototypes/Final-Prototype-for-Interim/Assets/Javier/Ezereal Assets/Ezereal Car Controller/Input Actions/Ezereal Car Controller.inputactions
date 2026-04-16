@@ -753,8 +753,30 @@
                 },
                 {
                     "name": "",
+                    "id": "77612a1b-68f7-47d5-a0fe-d28c1c691e35",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GearDrive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "978772bb-ec40-4a0d-b8bd-b86edaeb23f0",
                     "path": "<HID::Thustmaster T500 RS Gear Shift>/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GearReverse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26e7bb72-58f9-4346-a60c-b2889116ddeb",
+                    "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
