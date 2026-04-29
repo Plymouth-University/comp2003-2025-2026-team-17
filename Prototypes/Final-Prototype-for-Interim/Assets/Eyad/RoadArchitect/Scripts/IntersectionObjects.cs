@@ -81,64 +81,121 @@ namespace RoadArchitect
             Vector3 tPosLL = default(Vector3);
             GetFourPoints(roadIntersection, out tPosRR, out tPosRL, out tPosLL, out tPosLR, DistFromCorner);
 
-            //RR:
+            //replaced for the UK-position stop signs below this big block of code from RR to the end of LR
+            ////RR:
+            //spline = roadIntersection.node1.spline;
+            //tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+            ////xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
+            //tDir = StopSignGetRotRR(roadIntersection, spline);
+            //tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
+            //AddRigidbodyToSign(tObj, _isRB);
+
+            //tObj.transform.parent = _masterGameObj.transform;
+            //tObj.transform.position = tPosRR;
+            //tObj.name = "StopSignRR";
+            //if (roadIntersection.ignoreCorner == 0)
+            //{
+            //    Object.DestroyImmediate(tObj);
+            //}
+
+            ////LL:
+            //spline = roadIntersection.node1.spline;
+            //tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+            ////xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
+            //tDir = StopSignGetRotLL(roadIntersection, spline);
+            //tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
+            //AddRigidbodyToSign(tObj, _isRB);
+
+            //tObj.transform.parent = _masterGameObj.transform;
+            //tObj.transform.position = tPosLL;
+            //tObj.name = "StopSignLL";
+            //if (roadIntersection.ignoreCorner == 2)
+            //{
+            //    Object.DestroyImmediate(tObj);
+            //}
+
+            ////RL:
+            //spline = roadIntersection.node2.spline;
+            //tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+            ////xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
+            //tDir = StopSignGetRotRL(roadIntersection, spline);
+            //tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
+            //AddRigidbodyToSign(tObj, _isRB);
+
+            //tObj.transform.parent = _masterGameObj.transform;
+            //tObj.transform.position = tPosRL;
+            //tObj.name = "StopSignRL";
+            //if (roadIntersection.ignoreCorner == 1)
+            //{
+            //    Object.DestroyImmediate(tObj);
+            //}
+
+            ////LR:
+            //spline = roadIntersection.node2.spline;
+            //tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+            ////xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
+            //tDir = StopSignGetRotLR(roadIntersection, spline);
+            //tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
+            //AddRigidbodyToSign(tObj, _isRB);
+
+            //tObj.transform.parent = _masterGameObj.transform;
+            //tObj.transform.position = tPosLR;
+            //tObj.name = "StopSignLR";
+            //if (roadIntersection.ignoreCorner == 3)
+            //{
+            //    Object.DestroyImmediate(tObj);
+            //}
+
+            // RR Approach (Originally at tPosRR, moving laterally to tPosLR)
             spline = roadIntersection.node1.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotRR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             AddRigidbodyToSign(tObj, _isRB);
-
             tObj.transform.parent = _masterGameObj.transform;
-            tObj.transform.position = tPosRR;
+            tObj.transform.position = tPosLR; // <-- Swapped to left side of Road 1
             tObj.name = "StopSignRR";
             if (roadIntersection.ignoreCorner == 0)
             {
                 Object.DestroyImmediate(tObj);
             }
 
-            //LL:
+            // LL Approach (Originally at tPosLL, moving laterally to tPosRL)
             spline = roadIntersection.node1.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotLL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             AddRigidbodyToSign(tObj, _isRB);
-
             tObj.transform.parent = _masterGameObj.transform;
-            tObj.transform.position = tPosLL;
+            tObj.transform.position = tPosRL; // <-- Swapped to left side of Road 1
             tObj.name = "StopSignLL";
             if (roadIntersection.ignoreCorner == 2)
             {
                 Object.DestroyImmediate(tObj);
             }
 
-            //RL:
+            // RL Approach (Originally at tPosRL, moving laterally to tPosRR)
             spline = roadIntersection.node2.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotRL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             AddRigidbodyToSign(tObj, _isRB);
-
             tObj.transform.parent = _masterGameObj.transform;
-            tObj.transform.position = tPosRL;
+            tObj.transform.position = tPosRR; // <-- Swapped to left side of Road 2
             tObj.name = "StopSignRL";
             if (roadIntersection.ignoreCorner == 1)
             {
                 Object.DestroyImmediate(tObj);
             }
 
-            //LR:
+            // LR Approach (Originally at tPosLR, moving laterally to tPosLL)
             spline = roadIntersection.node2.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotLR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             AddRigidbodyToSign(tObj, _isRB);
-
             tObj.transform.parent = _masterGameObj.transform;
-            tObj.transform.position = tPosLR;
+            tObj.transform.position = tPosLL; // <-- Swapped to left side of Road 2
             tObj.name = "StopSignLR";
             if (roadIntersection.ignoreCorner == 3)
             {
@@ -281,29 +338,202 @@ namespace RoadArchitect
             float MaxDistanceStart = Mathf.Max(tempDistances);
             bool OrigPoleAlignment = intersection.isRegularPoleAlignment;
 
+            //// Removed for the replacement of the traffic lights to go on the other side
+            ////Node1:
+            ////RL:
+            //tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
+            ////xDir = (intersection.cornerRL - intersection.transform.position).normalized;
+            //tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner);
+            //if (tDir == zeroVect)
+            //{
+            //    tDir = new Vector3(0f, 0.0001f, 0f);
+            //}
+            //tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //tObjRL.transform.parent = _masterGameObj.transform;
+            //StartVec = tPosRL;
+            //EndVec = (tDir.normalized * TLDistance) + StartVec;
+            //if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
+            //{
+            //    //Convert to regular alignment if necessary
+            //    tObjRL.transform.parent = null;
+            //    tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner, true);
+            //    if (tDir == zeroVect)
+            //    {
+            //        tDir = new Vector3(0f, 0.0001f, 0f);
+            //    }
+            //    tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //    tObjRL.transform.parent = _masterGameObj.transform;
+            //}
+            //else
+            //{
+            //    intersection.isRegularPoleAlignment = true;
+            //    Object.DestroyImmediate(tObjRL);
+            //    tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
+            //    //xDir = (intersection.cornerRL - intersection.transform.position).normalized;
+            //    tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner);
+            //    if (tDir == zeroVect)
+            //    {
+            //        tDir = new Vector3(0f, 0.0001f, 0f);
+            //    }
+            //    tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //    tObjRL.transform.parent = _masterGameObj.transform;
+            //    StartVec = tPosRL;
+            //    EndVec = (tDir.normalized * TLDistance) + StartVec;
+            //    intersection.isRegularPoleAlignment = OrigPoleAlignment;
+            //}
+            //tObjRL.transform.position = tPosRL;
+            //tObjRL.transform.name = "TrafficLightRL";
+            //AddRigidbodyToTrafficLight(tObjRL, isRB);
+            ////LR:
+            //tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
+            ////xDir = (intersection.cornerLR - intersection.transform.position).normalized;
+            //tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
+            //if (tDir == zeroVect)
+            //{
+            //    tDir = new Vector3(0f, 0.0001f, 0f);
+            //}
+            //tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //tObjLR.transform.parent = _masterGameObj.transform;
+            //StartVec = tPosLR;
+            //EndVec = (tDir.normalized * TLDistance) + StartVec;
+            //if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
+            //{
+            //    //Convert to regular alignment if necessary
+            //    tObjLR.transform.parent = null;
+            //    tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner, true);
+            //    if (tDir == zeroVect)
+            //    {
+            //        tDir = new Vector3(0f, 0.0001f, 0f);
+            //    }
+            //    tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //    tObjLR.transform.parent = _masterGameObj.transform;
+            //}
+            //else
+            //{
+            //    intersection.isRegularPoleAlignment = true;
+            //    Object.DestroyImmediate(tObjLR);
+            //    tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
+            //    //xDir = (intersection.cornerLR - intersection.transform.position).normalized;
+            //    tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
+            //    if (tDir == zeroVect)
+            //    {
+            //        tDir = new Vector3(0f, 0.0001f, 0f);
+            //    }
+            //    tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //    tObjLR.transform.parent = _masterGameObj.transform;
+            //    StartVec = tPosLR;
+            //    EndVec = (tDir.normalized * TLDistance) + StartVec;
+            //    intersection.isRegularPoleAlignment = OrigPoleAlignment;
+            //}
+            //tObjLR.transform.position = tPosLR;
+            //tObjLR.transform.name = "TrafficLightLR";
+            //AddRigidbodyToTrafficLight(tObjLR, isRB);
+            ////Node2:
+            ////RR:
+            //tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
+            ////xDir = (intersection.cornerRR - intersection.transform.position).normalized;
+            //tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner);
+            //if (tDir == zeroVect)
+            //{
+            //    tDir = new Vector3(0f, 0.0001f, 0f);
+            //}
+            //tObjRR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //tObjRR.transform.parent = _masterGameObj.transform;
+            //StartVec = tPosRR;
+            //EndVec = (tDir.normalized * TLDistance) + StartVec;
+            //if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
+            //{
+            //    //Convert to regular alignment if necessary
+            //    tObjRR.transform.parent = null;
+            //    tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner, true);
+            //    if (tDir == zeroVect)
+            //    {
+            //        tDir = new Vector3(0f, 0.0001f, 0f);
+            //    }
+            //    tObjRR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
+            //    tObjRR.transform.parent = _masterGameObj.transform;
+            //}
+            //else
+            //{
+            //    intersection.isRegularPoleAlignment = true;
+            //    Object.DestroyImmediate(tObjRR);
+            //    tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
+            //    //xDir = (intersection.cornerRR - intersection.transform.position).normalized;
+            //    tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner);
+            //    if (tDir == zeroVect)
+            //    {
+            //        tDir = new Vector3(0f, 0.0001f, 0f);
+            //    }
+            //    tObjRR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //    tObjRR.transform.parent = _masterGameObj.transform;
+            //    StartVec = tPosRR;
+            //    EndVec = (tDir.normalized * TLDistance) + StartVec;
+            //    intersection.isRegularPoleAlignment = OrigPoleAlignment;
+            //}
+            //tObjRR.transform.position = tPosRR;
+            //tObjRR.transform.name = "TrafficLightRR";
+            //AddRigidbodyToTrafficLight(tObjRR, isRB);
+
+            ////LL:
+            //tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
+            ////xDir = (intersection.cornerLL - intersection.transform.position).normalized;
+            //tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner);
+            //if (tDir == zeroVect)
+            //{
+            //    tDir = new Vector3(0f, 0.0001f, 0f);
+            //}
+            //tObjLL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //tObjLL.transform.parent = _masterGameObj.transform;
+            //StartVec = tPosLL;
+            //EndVec = (tDir.normalized * TLDistance) + StartVec;
+            //if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
+            //{
+            //    //Convert to regular alignment if necessary
+            //    tObjLL.transform.parent = null;
+            //    tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner, true);
+            //    if (tDir == zeroVect)
+            //    {
+            //        tDir = new Vector3(0f, 0.0001f, 0f);
+            //    }
+            //    tObjLL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
+            //    tObjLL.transform.parent = _masterGameObj.transform;
+            //}
+            //else
+            //{
+            //    intersection.isRegularPoleAlignment = true;
+            //    Object.DestroyImmediate(tObjLL);
+            //    tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
+            //    //xDir = (intersection.cornerLL - intersection.transform.position).normalized;
+            //    tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner);
+            //    if (tDir == zeroVect)
+            //    {
+            //        tDir = new Vector3(0f, 0.0001f, 0f);
+            //    }
+            //    tObjLL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            //    tObjLL.transform.parent = _masterGameObj.transform;
+            //    StartVec = tPosLL;
+            //    EndVec = (tDir.normalized * TLDistance) + StartVec;
+            //    intersection.isRegularPoleAlignment = OrigPoleAlignment;
+            //}
+            //tObjLL.transform.position = tPosLL;
+            //tObjLL.transform.name = "TrafficLightLL";
+            //AddRigidbodyToTrafficLight(tObjLL, isRB);
+
             //Node1:
-            //RL:
+            //RL Logic (East-to-West Approach) -> Moves to Near Left (tPosLL)
             tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
-            //xDir = (intersection.cornerRL - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner);
-            if (tDir == zeroVect)
-            {
-                tDir = new Vector3(0f, 0.0001f, 0f);
-            }
-            tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+            tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f); // 0f flips arm inwards
             tObjRL.transform.parent = _masterGameObj.transform;
-            StartVec = tPosRL;
+            StartVec = tPosLL; // Moved to Near Left
             EndVec = (tDir.normalized * TLDistance) + StartVec;
             if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
             {
-                //Convert to regular alignment if necessary
                 tObjRL.transform.parent = null;
                 tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner, true);
-                if (tDir == zeroVect)
-                {
-                    tDir = new Vector3(0f, 0.0001f, 0f);
-                }
-                tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+                if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+                tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
                 tObjRL.transform.parent = _masterGameObj.transform;
             }
             else
@@ -311,43 +541,32 @@ namespace RoadArchitect
                 intersection.isRegularPoleAlignment = true;
                 Object.DestroyImmediate(tObjRL);
                 tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
-                //xDir = (intersection.cornerRL - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner);
-                if (tDir == zeroVect)
-                {
-                    tDir = new Vector3(0f, 0.0001f, 0f);
-                }
-                tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+                if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+                tObjRL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
                 tObjRL.transform.parent = _masterGameObj.transform;
-                StartVec = tPosRL;
+                StartVec = tPosLL;
                 EndVec = (tDir.normalized * TLDistance) + StartVec;
                 intersection.isRegularPoleAlignment = OrigPoleAlignment;
             }
-            tObjRL.transform.position = tPosRL;
+            tObjRL.transform.position = tPosLL; // Moved to Near Left
             tObjRL.transform.name = "TrafficLightRL";
             AddRigidbodyToTrafficLight(tObjRL, isRB);
-            //LR:
+
+            //LR Logic (West-to-East Approach) -> Moves to Near Left (tPosRR)
             tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
-            //xDir = (intersection.cornerLR - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
-            if (tDir == zeroVect)
-            {
-                tDir = new Vector3(0f, 0.0001f, 0f);
-            }
-            tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+            tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f); // 0f flips arm inwards
             tObjLR.transform.parent = _masterGameObj.transform;
-            StartVec = tPosLR;
+            StartVec = tPosRR; // Moved to Near Left
             EndVec = (tDir.normalized * TLDistance) + StartVec;
             if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
             {
-                //Convert to regular alignment if necessary
                 tObjLR.transform.parent = null;
                 tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner, true);
-                if (tDir == zeroVect)
-                {
-                    tDir = new Vector3(0f, 0.0001f, 0f);
-                }
-                tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+                if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+                tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
                 tObjLR.transform.parent = _masterGameObj.transform;
             }
             else
@@ -355,43 +574,32 @@ namespace RoadArchitect
                 intersection.isRegularPoleAlignment = true;
                 Object.DestroyImmediate(tObjLR);
                 tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
-                //xDir = (intersection.cornerLR - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
-                if (tDir == zeroVect)
-                {
-                    tDir = new Vector3(0f, 0.0001f, 0f);
-                }
-                tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+                if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+                tObjLR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
                 tObjLR.transform.parent = _masterGameObj.transform;
-                StartVec = tPosLR;
+                StartVec = tPosRR;
                 EndVec = (tDir.normalized * TLDistance) + StartVec;
                 intersection.isRegularPoleAlignment = OrigPoleAlignment;
             }
-            tObjLR.transform.position = tPosLR;
+            tObjLR.transform.position = tPosRR; // Moved to Near Left
             tObjLR.transform.name = "TrafficLightLR";
             AddRigidbodyToTrafficLight(tObjLR, isRB);
+
             //Node2:
-            //RR:
+            //RR Logic (North-to-South Approach) -> Moves to Near Left (tPosRL)
             tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
-            //xDir = (intersection.cornerRR - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner);
-            if (tDir == zeroVect)
-            {
-                tDir = new Vector3(0f, 0.0001f, 0f);
-            }
-            tObjRR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+            tObjRR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f); // 0f flips arm inwards
             tObjRR.transform.parent = _masterGameObj.transform;
-            StartVec = tPosRR;
+            StartVec = tPosRL; // Moved to Near Left
             EndVec = (tDir.normalized * TLDistance) + StartVec;
             if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
             {
-                //Convert to regular alignment if necessary
                 tObjRR.transform.parent = null;
                 tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner, true);
-                if (tDir == zeroVect)
-                {
-                    tDir = new Vector3(0f, 0.0001f, 0f);
-                }
+                if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
                 tObjRR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
                 tObjRR.transform.parent = _masterGameObj.transform;
             }
@@ -400,43 +608,31 @@ namespace RoadArchitect
                 intersection.isRegularPoleAlignment = true;
                 Object.DestroyImmediate(tObjRR);
                 tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
-                //xDir = (intersection.cornerRR - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner);
-                if (tDir == zeroVect)
-                {
-                    tDir = new Vector3(0f, 0.0001f, 0f);
-                }
-                tObjRR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+                if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+                tObjRR.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
                 tObjRR.transform.parent = _masterGameObj.transform;
-                StartVec = tPosRR;
+                StartVec = tPosRL;
                 EndVec = (tDir.normalized * TLDistance) + StartVec;
                 intersection.isRegularPoleAlignment = OrigPoleAlignment;
             }
-            tObjRR.transform.position = tPosRR;
+            tObjRR.transform.position = tPosRL; // Moved to Near Left
             tObjRR.transform.name = "TrafficLightRR";
             AddRigidbodyToTrafficLight(tObjRR, isRB);
 
-            //LL:
+            //LL Logic (South-to-North Approach) -> Moves to Near Left (tPosLR)
             tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
-            //xDir = (intersection.cornerLL - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner);
-            if (tDir == zeroVect)
-            {
-                tDir = new Vector3(0f, 0.0001f, 0f);
-            }
-            tObjLL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+            if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+            tObjLL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f); // 0f flips arm inwards
             tObjLL.transform.parent = _masterGameObj.transform;
-            StartVec = tPosLL;
+            StartVec = tPosLR; // Moved to Near Left
             EndVec = (tDir.normalized * TLDistance) + StartVec;
             if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
             {
-                //Convert to regular alignment if necessary
                 tObjLL.transform.parent = null;
                 tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner, true);
-                if (tDir == zeroVect)
-                {
-                    tDir = new Vector3(0f, 0.0001f, 0f);
-                }
+                if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
                 tObjLL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
                 tObjLL.transform.parent = _masterGameObj.transform;
             }
@@ -445,19 +641,15 @@ namespace RoadArchitect
                 intersection.isRegularPoleAlignment = true;
                 Object.DestroyImmediate(tObjLL);
                 tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
-                //xDir = (intersection.cornerLL - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner);
-                if (tDir == zeroVect)
-                {
-                    tDir = new Vector3(0f, 0.0001f, 0f);
-                }
-                tObjLL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, -180f, 0f);
+                if (tDir == zeroVect) { tDir = new Vector3(0f, 0.0001f, 0f); }
+                tObjLL.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(-90f, 0f, 0f);
                 tObjLL.transform.parent = _masterGameObj.transform;
-                StartVec = tPosLL;
+                StartVec = tPosLR;
                 EndVec = (tDir.normalized * TLDistance) + StartVec;
                 intersection.isRegularPoleAlignment = OrigPoleAlignment;
             }
-            tObjLL.transform.position = tPosLL;
+            tObjLL.transform.position = tPosLR; // Moved to Near Left
             tObjLL.transform.name = "TrafficLightLL";
             AddRigidbodyToTrafficLight(tObjLL, isRB);
 
