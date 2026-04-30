@@ -12,11 +12,14 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
     [Header("Generation Settings")]
     [Tooltip("Distance between each waypoint along the road (in meters).")]
     public float distanceBetweenWaypoints = 10f;
-
     [Tooltip("How many lanes exist on EACH side of the center line?")]
     public int lanesPerSide = 2;
     [Tooltip("The width of a single lane (in meters).")]
     public float laneWidth = 3.5f;
+
+    [Header("Intersection Detection")]
+    [Tooltip("How far from the center of the intersection should waypoints stop? (In meters)")]
+    public float intersectionClearance = 15f;
 
     [Header("Surface Snapping")]
     [Tooltip("The physics layer your road mesh is on, so we only snap to the road.")]
@@ -42,6 +45,16 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         {
             Debug.LogError("Missing references! Please assign the SplineC and Prefab.");
             return;
+        }
+
+        // --- AUTO CLEANUP ---
+        // If you run the script multiple times, it will create multiple sets of waypoints. This ensures a clean slate each time.
+        string expectedFolderName = roadSpline.gameObject.name + "_Bidirectional_WPs";
+        GameObject oldHierarchy = GameObject.Find(expectedFolderName);
+        if (oldHierarchy != null)
+        {
+            Debug.LogWarning($"An old waypoint hierarchy named '{expectedFolderName}' was found and will be destroyed to prevent clutter.");
+            DestroyImmediate(oldHierarchy);
         }
 
         // --- STEP 1: SET UP THE FOLDER HIERARCHY ---
@@ -81,7 +94,18 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
             float t = currentDist / totalLength;
 
             // Get the center position and forward direction
+
             roadSpline.GetSplineValueBoth(t, out Vector3 centerPos, out Vector3 forwardDir);
+
+            // Intersection zone detection
+            if (IsInsideIntersectionZone(centerPos))
+            {
+                // If true, we are too close to intersection. Skip dropping waypoints here.
+                Debug.Log($"Skipping waypoint at distance {currentDist} due to intersection proximity.");
+                continue;
+                //break;
+            }
+
             forwardDir = forwardDir.normalized;
             Vector3 rightDir = Vector3.Cross(Vector3.up, forwardDir).normalized;
 
@@ -108,7 +132,18 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
             float t = currentDist / totalLength;
 
             // Get the center position and forward direction
+
             roadSpline.GetSplineValueBoth(t, out Vector3 centerPos, out Vector3 forwardDir);
+
+            // Intersection zone detection
+            if (IsInsideIntersectionZone(centerPos))
+            {
+                // If true, we are too close to intersection. Skip dropping waypoints here.
+                Debug.Log($"Skipping waypoint at distance {currentDist} due to intersection proximity.");
+                continue;
+                //break;
+            }
+
             forwardDir = forwardDir.normalized;
             Vector3 rightDir = Vector3.Cross(Vector3.up, forwardDir).normalized;
 
@@ -145,7 +180,29 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         Debug.Log($"Bidirectional generation complete! Left Forward WPs: {leftIndex} | Right Oncoming WPs: {rightIndex}");
     }
 
-    // Helper function now requires a 'forwardDirection' to rotate the spawned waypoint correctly
+    // --- HELPER METHODS ---
+    // Determine if a given position is within the intersection clearance zone
+    // Scans all nodes in road. If intersection node found, check if current position is inside Intersection Clearance Zone
+    private bool IsInsideIntersectionZone(Vector3 currentCenterPos)
+    {
+        foreach (SplineN node in roadSpline.nodes)
+        {
+            if (node.isIntersection)
+            {
+                float distanceToNode = Vector3.Distance(currentCenterPos, node.pos);
+
+                if (distanceToNode <= intersectionClearance)
+                {
+                    return true; // Current position is too close to an intersection node
+                }
+            }
+        }
+
+        return false; // No intersection nodes are within the clearance distance
+    }
+
+    // Responsible for instantiating a waypoint prefab at the correct position and rotation
+    // Requires a 'forwardDirection' to rotate the spawned waypoint correctly
     private void PlaceWaypoint(Vector3 rawPosition, Vector3 forwardDirection, Transform parent, string objectName)
     {
         Vector3 raycastStartPos = rawPosition + (Vector3.up * raycastStartHeight);
@@ -165,7 +222,8 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         }
     }
 
-    // Helper function to add and configure a LaneTrafficManager on a given lane GameObject
+
+    // Method to add and configure a LaneTrafficManager on a given lane GameObject
     private void AttachTrafficManager(GameObject laneObject)
     {
         // AddComponent physically glues the script to the target GameObject
