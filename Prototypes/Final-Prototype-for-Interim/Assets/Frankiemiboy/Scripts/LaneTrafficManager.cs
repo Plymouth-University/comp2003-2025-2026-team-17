@@ -10,10 +10,12 @@ public class LaneTrafficManager : MonoBehaviour
     public int targetCarCount = 5;
     [Tooltip("Minimum time (in seconds) between releasing cars onto the road.")]
     public float spawnInterval = 3f;
+    [Tooltip("Set the maximum speed for cars in this specific lane")]
+    public float laneSpeed = 30f;
 
     [Header("Safety Checks")]
     [Tooltip("The radius of the invisible sphere used to check if the spawn point is clear.")]
-    public float clearanceRadius = 4f;
+    public float clearanceRadius = 5f;
     [Tooltip("Which layer holds your vehicles? (Used to check for traffic jams at the spawn).")]
     public LayerMask obstacleLayer;
 
@@ -88,6 +90,17 @@ public class LaneTrafficManager : MonoBehaviour
 
     private void SpawnAndSetupNewCar()
     {
+        // Set the car's max speed based on the lane's speed limit
+        SimpleWaypointFollower tempBrain = carPrefab.GetComponent<SimpleWaypointFollower>();
+        if (tempBrain != null)
+        {
+            tempBrain.maxSpeed = laneSpeed;
+        }
+        else
+        {
+            Debug.LogError($"The car prefab assigned to {gameObject.name} is missing the SimpleWaypointFollower script!");
+        }
+
         // Instantiate (spawn) the car at the exact position and rotation of the very first waypoint
         GameObject spawnedCar = Instantiate(carPrefab, laneWaypoints[0].position, laneWaypoints[0].rotation);
 

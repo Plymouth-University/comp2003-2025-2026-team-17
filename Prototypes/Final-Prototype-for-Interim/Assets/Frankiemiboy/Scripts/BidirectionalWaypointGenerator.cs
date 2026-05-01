@@ -47,14 +47,16 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
             return;
         }
 
-        // --- AUTO CLEANUP ---
-        // If you run the script multiple times, it will create multiple sets of waypoints. This ensures a clean slate each time.
-        string expectedFolderName = roadSpline.gameObject.name + "_Bidirectional_WPs";
-        GameObject oldHierarchy = GameObject.Find(expectedFolderName);
-        if (oldHierarchy != null)
+        // --- INCREMENTAL NAMING SYSTEM FOR SPLINE WAYPOINTS DIRECTORY ---
+        // If an already existing hierarchy from a previous generation is found, create a new one with an incremental number suffix to prevent clutter and data loss. (e.g., Spline_Bidirectional_WP_1, Spline_Bidirectional_WP_2, ... etc.)
+        string baseFolderName = roadSpline.gameObject.name + "_Bidirectional_WPs";
+        string finalFolderName = baseFolderName;
+        int folderIndex = 1;
+
+        while (GameObject.Find(finalFolderName) != null)
         {
-            Debug.LogWarning($"An old waypoint hierarchy named '{expectedFolderName}' was found and will be destroyed to prevent clutter.");
-            DestroyImmediate(oldHierarchy);
+            finalFolderName = baseFolderName + "_" + folderIndex;
+            folderIndex++;
         }
 
         // --- STEP 1: SET UP THE FOLDER HIERARCHY ---

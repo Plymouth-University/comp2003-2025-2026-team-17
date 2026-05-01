@@ -7662,7 +7662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypoints: []
   myManager: {fileID: 0}
-  maxSpeed: 40
+  maxSpeed: 55
   acceleration: 15
   deceleration: 15
   sensorBoxSize: {x: 2.5, y: 2.5, z: 0.2}
