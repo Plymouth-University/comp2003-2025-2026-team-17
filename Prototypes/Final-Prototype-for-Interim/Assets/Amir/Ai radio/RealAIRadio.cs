@@ -20,8 +20,7 @@ public class RealAIRadio : MonoBehaviour
 
     private string hfToken = "";
 
-    // The endpoint for Meta's free MusicGen model
-    private string apiUrl = "https://api-inference.huggingface.co/models/facebook/musicgen-small";
+    private const string ApiUrl = "https://api-inference.huggingface.co/models/cvssp/audioldm-s-full-v2";
 
     // -------------------------------------------------------------------------
     // .env loader — reads Assets/StreamingAssets/.env at runtime
