@@ -7662,15 +7662,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypoints: []
   myManager: {fileID: 0}
-  maxSpeed: 55
+  maxSpeed: 35
   acceleration: 15
   deceleration: 15
-  sensorBoxSize: {x: 2.5, y: 2.5, z: 0.2}
-  safeStoppingDistance: 5
+  sensorBoxSize: {x: 1.5, y: 2, z: 0.2}
+  safeStoppingDistance: 3
   sensorOffset: {x: 0, y: 0.8, z: 2.5}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 640
   rotationSpeed: 10
   waypointThreshold: 2
   roadLayer:
