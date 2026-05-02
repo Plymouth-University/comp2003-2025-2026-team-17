@@ -7664,9 +7664,9 @@ MonoBehaviour:
   myManager: {fileID: 0}
   maxSpeed: 35
   acceleration: 15
-  deceleration: 15
-  sensorBoxSize: {x: 1.5, y: 2, z: 0.2}
-  safeStoppingDistance: 3
+  deceleration: 18
+  sensorBoxSize: {x: 1.7, y: 2, z: 1}
+  safeStoppingDistance: 5
   sensorOffset: {x: 0, y: 0.8, z: 2.5}
   obstacleLayer:
     serializedVersion: 2
