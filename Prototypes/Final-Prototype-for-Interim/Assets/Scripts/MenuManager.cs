@@ -11,7 +11,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnScenario1Clicked()
     {
-        SceneManager.LoadScene("Straight road scenario");
+        SceneManager.LoadScene("Tutorial Road Scene");
         unfreezeTime();
     }
     public void OnScenario2Clicked()
