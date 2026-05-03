@@ -52,6 +52,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 623005508410226271, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Value
+      value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 623005508410226271, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Center
+      value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 623005508410226271, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Range.x
+      value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 623005508410226271, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Range.y
+      value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 623005508410226271, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Range.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 623005508410226271, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Range.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 623005508410226271, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: TrackerSettings.BindingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 725948985008943082, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -457,6 +485,66 @@ PrefabInstance:
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Value
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Wrap
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Center
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Value
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Range.x
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Range.y
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Center
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Range.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: TrackerSettings.BindingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Recentering.Time
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Recentering.Wait
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Recentering.Time
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Recentering.Wait
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: VerticalAxis.Recentering.Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904548227111596130, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: HorizontalAxis.Recentering.Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4919075484537545102, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -612,6 +700,10 @@ PrefabInstance:
     - target: {fileID: 6998629203428280908, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114275331932080648, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: brakePower
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 7157751173415512525, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_Layer
@@ -783,8 +875,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9142275550821158628, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: currentCameraView
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9142275550821158628, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: 'cameras.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8422371818133050263}
+    - target: {fileID: 9142275550821158628, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: 'cameras.Array.data[2]'
+      value: 
+      objectReference: {fileID: 672629207439160369}
+    - target: {fileID: 9142275550821158628, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: 'cameras.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2114497816152980491}
     - target: {fileID: 9142827650839442516, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -834,6 +938,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3639029797081042991, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
   m_PrefabInstance: {fileID: 3955665297133411268}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &672629207439160369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4589431982455042037, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+  m_PrefabInstance: {fileID: 3955665297133411268}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1399914309678125968 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2704453379113076820, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
@@ -847,6 +956,16 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399914309678125968}
   m_Enabled: 1
+--- !u!1 &2114497816152980491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3151794262272190415, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+  m_PrefabInstance: {fileID: 3955665297133411268}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8422371818133050263 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4757804700163557459, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+  m_PrefabInstance: {fileID: 3955665297133411268}
+  m_PrefabAsset: {fileID: 0}
 --- !u!82 &8486923714786945599 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 4837645029861028347, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
