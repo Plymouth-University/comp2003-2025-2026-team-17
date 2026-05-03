@@ -16,7 +16,7 @@ public class MenuManager : MonoBehaviour
     }
     public void OnScenario2Clicked()
     {
-        SceneManager.LoadScene("Highway scenario");
+        SceneManager.LoadScene("Road Network");
         unfreezeTime();
     }
 

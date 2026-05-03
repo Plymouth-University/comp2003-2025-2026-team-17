@@ -12,7 +12,7 @@ namespace Ezereal
         [SerializeField] EzerealLightController ezerealLightController;
         [SerializeField] EzerealSoundController ezerealSoundController;
         [SerializeField] EzerealWheelFrictionController ezerealWheelFrictionController;
-        [SerializeField] RealAIRadio realAIRadio; // UPDATE: Added reference to the AI Radio script so that we can call it from here when the player presses the button to turn on the radio.
+        // AI radio obsolete [SerializeField] RealAIRadio realAIRadio; // UPDATE: Added reference to the AI Radio script so that we can call it from here when the player presses the button to turn on the radio.
 
         [Header("References")]
 
@@ -174,17 +174,18 @@ namespace Ezereal
 
         }
 
-        void OnRadio() 
-        {
-            if (isStarted && (realAIRadio != null))
-            {
-                realAIRadio.TurnOnRadio();
-            }
-            else if (realAIRadio == null)
-            {
-                Debug.LogWarning("RealAIRadio reference is missing or is not assigned in the EzrealCarController. Attach one to use the AI Radio feature.");
-            }
-        }
+        // AI Radio obsolete
+        //void OnRadio() 
+        //{
+        //    if (isStarted && (realAIRadio != null))
+        //    {
+        //        realAIRadio.TurnOnRadio();
+        //    }
+        //    else if (realAIRadio == null)
+        //    {
+        //        Debug.LogWarning("RealAIRadio reference is missing or is not assigned in the EzrealCarController. Attach one to use the AI Radio feature.");
+        //    }
+        //}
 
         void OnAccelerate(InputValue accelerationValue)
         {

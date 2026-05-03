@@ -27,5 +27,10 @@ public class TutorialManager : MonoBehaviour
         {
             slides[i].SetActive(i == slideIndex);
         }
+
+        // corutine to pause game for 7 seconds
+
     }
+
+    // corutine
 }
