@@ -1,10 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class TutorialManager : MonoBehaviour
 {
     [Header("Tutorial Slides")]
     [Tooltip("Drag your Slide empty GameObjects here in order.")]
     public GameObject[] slides;
+
+    [SerializeField] private GameObject readTheTutorialPrompt;
+
+    [SerializeField] private float freezeTimeOnNewSlide = 7f;
 
     private void Start()
     {
@@ -28,9 +33,21 @@ public class TutorialManager : MonoBehaviour
             slides[i].SetActive(i == slideIndex);
         }
 
-        // corutine to pause game for 7 seconds
-
+        // corutine to pause game for x seconds
+        StartCoroutine(PauseGameRoutine(freezeTimeOnNewSlide));
     }
 
     // corutine
+    private IEnumerator PauseGameRoutine(float duration)
+    {
+        Time.timeScale = 0.1f;
+        readTheTutorialPrompt.SetActive(true);
+        AudioListener.volume = 0.2f;
+        // Wait for real-world seconds (ignores the frozen timeScale)
+        yield return new WaitForSecondsRealtime(duration);
+
+        readTheTutorialPrompt.SetActive(false);
+        AudioListener.volume = 1f;
+        Time.timeScale = 1f;
+    }
 }
