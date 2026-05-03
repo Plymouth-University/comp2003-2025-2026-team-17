@@ -5,7 +5,8 @@ namespace Ezereal
 {
     public class EzerealCameraController : MonoBehaviour
     {
-        [SerializeField] CameraViews currentCameraView = CameraViews.cockpit;
+        [SerializeField] public CameraViews currentCameraView = CameraViews.cockpit;
+        public CameraViews previousCameraView;
 
         [SerializeField] private GameObject[] cameras; // Assume cameras are in order: cockpit, close, far, locked, wheel
 
@@ -17,10 +18,11 @@ namespace Ezereal
         void OnSwitchCamera()
         {
             currentCameraView = (CameraViews)(((int)currentCameraView + 1) % cameras.Length);
+            //previousCameraView = currentCameraView;
             SetCameraView(currentCameraView);
         }
 
-        private void SetCameraView(CameraViews view)
+        public void SetCameraView(CameraViews view)
         {
             for (int i = 0; i < cameras.Length; i++)
             {

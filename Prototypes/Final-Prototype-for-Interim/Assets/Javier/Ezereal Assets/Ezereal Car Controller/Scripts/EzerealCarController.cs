@@ -9,6 +9,7 @@ namespace Ezereal
     {
         [Header("Ezereal References")]
 
+        [SerializeField] EzerealCameraController ezerealCameraController;
         [SerializeField] EzerealLightController ezerealLightController;
         [SerializeField] EzerealSoundController ezerealSoundController;
         [SerializeField] EzerealWheelFrictionController ezerealWheelFrictionController;
@@ -558,6 +559,11 @@ namespace Ezereal
                 {
                     currentGear = AutomaticGears.Drive;
                     UpdateGearText("D");
+                    //if (ezerealCameraController.previousCameraView != null) 
+                    //{
+                        ezerealCameraController.currentCameraView = ezerealCameraController.previousCameraView;
+                        ezerealCameraController.SetCameraView(ezerealCameraController.currentCameraView); // set the camera view to what it was before the gear change to reverse
+                    //}
                     if (isStarted && ezerealLightController != null) ezerealLightController.ReverseLightsOff();
                 }
             }
@@ -565,8 +571,10 @@ namespace Ezereal
             {
                 if (currentGear != AutomaticGears.Reverse)
                 {
+                    ezerealCameraController.previousCameraView = ezerealCameraController.currentCameraView; // save the camera view that was there before the change of camera
                     currentGear = AutomaticGears.Reverse;
                     UpdateGearText("R");
+                    ezerealCameraController.SetCameraView(CameraViews.locked);
                     if (isStarted && ezerealLightController != null) ezerealLightController.ReverseLightsOn();
                 }
             }

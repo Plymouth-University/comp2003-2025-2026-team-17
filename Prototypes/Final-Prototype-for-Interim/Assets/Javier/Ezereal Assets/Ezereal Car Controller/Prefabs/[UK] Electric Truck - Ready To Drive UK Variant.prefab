@@ -705,6 +705,10 @@ PrefabInstance:
       propertyPath: brakePower
       value: 4000
       objectReference: {fileID: 0}
+    - target: {fileID: 7114275331932080648, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+      propertyPath: ezerealCameraController
+      value: 
+      objectReference: {fileID: 5204678536875808032}
     - target: {fileID: 7157751173415512525, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -961,6 +965,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3151794262272190415, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
   m_PrefabInstance: {fileID: 3955665297133411268}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5204678536875808032 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9142275550821158628, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
+  m_PrefabInstance: {fileID: 3955665297133411268}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279143569106083414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d59b8a05cc67b0641bbac1890922fab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8422371818133050263 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4757804700163557459, guid: 9c8b1a896405b584e99933fce51d5688, type: 3}
