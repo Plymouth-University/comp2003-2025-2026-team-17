@@ -65,7 +65,7 @@ public class LocalRadioPlayer : MonoBehaviour
         }
         else
         {
-            musicSource.Stop();
+            musicSource.Pause();
         }
     }
 
