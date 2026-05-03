@@ -2490,7 +2490,7 @@ MonoBehaviour:
   TiltAxis:
     Value: 0
     Center: 0
-    Range: {x: -70, y: 70}
+    Range: {x: 0, y: 0}
     Wrap: 0
     Recentering:
       Enabled: 0
@@ -2520,6 +2520,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 2665944532482622193, guid: 67d1239777fa0e944b8dee2f1d7df18d, type: 3}
         Gain: 5
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -2531,6 +2533,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 2665944532482622193, guid: 67d1239777fa0e944b8dee2f1d7df18d, type: 3}
         Gain: -5
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -3698,6 +3702,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4092,6 +4097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a076c17fe76165e4f8ed21498b877bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Easing: 0
   Modifiers: []
   references:
     version: 2
@@ -4119,6 +4125,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 2665944532482622193, guid: 67d1239777fa0e944b8dee2f1d7df18d, type: 3}
         Gain: 20
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -4130,6 +4138,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 2665944532482622193, guid: 67d1239777fa0e944b8dee2f1d7df18d, type: 3}
         Gain: -20
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -4141,6 +4151,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 0}
         Gain: 1
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -4254,6 +4266,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4997,6 +5010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46348285f23b1144dad9e361a04831c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ezerealCameraController: {fileID: 0}
   ezerealLightController: {fileID: 863393340324153802}
   ezerealSoundController: {fileID: 1344273529761774449}
   ezerealWheelFrictionController: {fileID: 6478941567011576312}
@@ -5026,8 +5040,13 @@ MonoBehaviour:
   stopThreshold: 1
   decelerationSpeed: 0.5
   maxSteeringWheelRotation: 100
+  isHandbrakeActive: 0
   driveType: -1
   currentGear: 1
+  isDriveInputActive: 0
+  isReverseInputActive: 0
+  driveGearAction: {fileID: 0}
+  reverseGearAction: {fileID: 0}
   stationary: 1
   currentSpeed: 0
   currentAccelerationValue: 0
@@ -5114,6 +5133,7 @@ MonoBehaviour:
   ezerealCarController: {fileID: 7114275331932080648}
   tireAudio: {fileID: 0}
   engineAudio: {fileID: 0}
+  enginePitchValue: 1
   maxVolume: 0.3
   alreadyPlaying: 0
 --- !u!114 &9142275550821158628
@@ -5129,12 +5149,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCameraView: 1
+  previousCameraView: 0
   cameras:
   - {fileID: 1920492357214142347}
   - {fileID: 3151794262272190415}
   - {fileID: 4589431982455042037}
   - {fileID: 4757804700163557459}
   - {fileID: 2305453469524639500}
+  cockpitPanTilt: {fileID: 0}
 --- !u!114 &6478941567011576312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5957,6 +5979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a076c17fe76165e4f8ed21498b877bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Easing: 0
   Modifiers: []
   references:
     version: 2
@@ -5984,6 +6007,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 2665944532482622193, guid: 67d1239777fa0e944b8dee2f1d7df18d, type: 3}
         Gain: 20
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -5995,6 +6020,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 2665944532482622193, guid: 67d1239777fa0e944b8dee2f1d7df18d, type: 3}
         Gain: -20
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -6006,6 +6033,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 0}
         Gain: 1
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -9067,6 +9096,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10736,6 +10766,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -11141,6 +11172,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
