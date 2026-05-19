@@ -826,8 +826,30 @@
                 },
                 {
                     "name": "",
+                    "id": "7018d261-9150-4ea1-b493-865edb725197",
+                    "path": "<HID::44F B696>/hat/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "be17b4b7-716b-462e-a698-9ea0e9e8e250",
                     "path": "<Keyboard>/rightBracket",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "578b5756-377b-46dc-884b-e2e5c7f7be0b",
+                    "path": "<HID::44F B696>/hat/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
