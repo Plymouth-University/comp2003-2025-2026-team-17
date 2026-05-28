@@ -1,5 +1,6 @@
-using UnityEngine;
 using RoadArchitect;
+using UnityEditor;
+using UnityEngine;
 
 public class BidirectionalWaypointGenerator : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
     public SplineC roadSpline;
     [Tooltip("The prefab we will spawn as a waypoint. (Ensure its Collider is removed!)")]
     public GameObject waypointPrefab;
+    [Tooltip("The prefab for the node markers")]
+    public GameObject RoadNodeMarkerPrefab;
 
     [Header("Generation Settings")]
     [Tooltip("Distance between each waypoint along the road (in meters).")]
@@ -41,9 +44,21 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
     [ContextMenu("Generate Bidirectional Waypoints")]
     public void GenerateWaypoints()
     {
-        if (roadSpline == null || waypointPrefab == null)
+        if (roadSpline == null)
         {
-            Debug.LogError("Missing references! Please assign the SplineC and Prefab.");
+            Debug.LogError("Missing References!\n Road Spline is not assigned! Please assign the SplineC to follow road and place waypoints");
+            return;
+        }
+
+        if (waypointPrefab == null)
+        {
+            Debug.LogError("Missing References!\n Waypoint Prefab is not assigned! Please assign a prefab to spawn as waypoints.");
+            return;
+        }
+
+        if (RoadNodeMarkerPrefab == null)
+        {
+            Debug.LogError("Missing References!\n Road Node Marker Prefab is not assigned! Please assign a prefab to spawn as road node markers.");
             return;
         }
 
@@ -73,14 +88,16 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         Transform[] leftLaneFolders = new Transform[lanesPerSide];
         Transform[] rightLaneFolders = new Transform[lanesPerSide];
 
+        // Array to hold all road nodes that are at the intersections
+        GameObject roadNodesCoordinates = new GameObject("Road_Node_Coordinates");
+        roadNodesCoordinates.transform.SetParent(mainParent.transform);
+
+        // Add the individual lanes as children under each side's parent folder (e.g., Lane_L0, Lane_L1, Lane_R0, Lane_R1, etc.)
         for (int i = 0; i < lanesPerSide; i++)
         {
-            // The left lane folder
-            // GameObject leftLaneObj = new GameObject("Lane_L" + i);
             leftLaneFolders[i] = new GameObject("Lane_L" + i).transform;
             leftLaneFolders[i].SetParent(leftSideParent.transform);
 
-            //GameObject rightLaneObj = new GameObject("Lane_R" + i);
             rightLaneFolders[i] = new GameObject("Lane_R" + i).transform;
             rightLaneFolders[i].SetParent(rightSideParent.transform);
         }
@@ -88,29 +105,29 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         // Get the physical length of the road from RoadArchitect
         float totalLength = roadSpline.distance;
 
-        // --- STEP 2: PASS 1 (LEFT SIDE / FORWARD TRAFFIC) ---
-        // We walk from 0 to the end of the road.
+        // --- STEP 2: 1st PASS (LEFT SIDE / FORWARD TRAFFIC) ---
+        // Walk from 0 to the end of the road.
         int leftIndex = 0;
         for (float currentDist = 5.0f; currentDist <= totalLength; currentDist += distanceBetweenWaypoints)
         {
             float t = currentDist / totalLength;
 
-            // Get the center position and forward direction
-
+            // Get the center position and forward direction at that point on the spline
             roadSpline.GetSplineValueBoth(t, out Vector3 centerPos, out Vector3 forwardDir);
 
             // Intersection zone detection
-            if (IsInsideIntersectionZone(centerPos))
-            {
-                // If true, we are too close to intersection. Skip dropping waypoints here.
-                Debug.Log($"Skipping waypoint at distance {currentDist} due to intersection proximity.");
-                continue;
-                //break;
-            }
+            //if (IsInsideIntersectionZone(centerPos))
+            //{
+            //    // If true, we are too close to intersection. Skip dropping waypoints here.
+            //    Debug.Log($"Skipping waypoint at distance {currentDist} due to intersection proximity.");
+            //    continue;
+            //    //break;
+            //}
 
             forwardDir = forwardDir.normalized;
             Vector3 rightDir = Vector3.Cross(Vector3.up, forwardDir).normalized;
 
+            // Start generating and placing waypoints per lane
             for (int lane = 0; lane < lanesPerSide; lane++)
             {
                 // Calculate distance from center: inner lane is half a width, next is 1.5 widths, etc.
@@ -123,6 +140,8 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
                 // Place waypoint, facing the normal forward direction
                 PlaceWaypoint(lanePos, forwardDir, leftLaneFolders[lane], wpName);
             }
+
+            // Increment waypoint index for naming purposes
             leftIndex++;
         }
 
@@ -137,14 +156,14 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
 
             roadSpline.GetSplineValueBoth(t, out Vector3 centerPos, out Vector3 forwardDir);
 
-            // Intersection zone detection
-            if (IsInsideIntersectionZone(centerPos))
-            {
-                // If true, we are too close to intersection. Skip dropping waypoints here.
-                Debug.Log($"Skipping waypoint at distance {currentDist} due to intersection proximity.");
-                continue;
-                //break;
-            }
+            //// Intersection zone detection
+            //if (IsInsideIntersectionZone(centerPos))
+            //{
+            //    // If true, we are too close to intersection. Skip dropping waypoints here.
+            //    Debug.Log($"Skipping waypoint at distance {currentDist} due to intersection proximity.");
+            //    continue;
+            //    //break;
+            //}
 
             forwardDir = forwardDir.normalized;
             Vector3 rightDir = Vector3.Cross(Vector3.up, forwardDir).normalized;
@@ -179,7 +198,27 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
             }
         }
 
+        // --- STEP 4: COLLECT ROAD NODE COORDINATES ---
+        CollectNodeCoordinates(roadNodesCoordinates.transform);
+
         Debug.Log($"Bidirectional generation complete! Left Forward WPs: {leftIndex} | Right Oncoming WPs: {rightIndex}");
+    }
+
+    // Log positions of all intersection nodes
+    private void CollectNodeCoordinates(Transform parent)
+    {
+        
+
+        foreach (SplineN node in roadSpline.nodes)
+        {
+            Vector3 raycastStartPos = node.pos + (Vector3.up * raycastStartHeight);
+            if (Physics.Raycast(raycastStartPos, Vector3.down, out RaycastHit hitInfo, raycastStartHeight * 2f, roadLayerMask))
+            {
+                GameObject roadNodeMarker = Instantiate(RoadNodeMarkerPrefab, hitInfo.point, node.rot);
+                roadNodeMarker.transform.SetParent(parent);
+            }
+        }
+        // return true;
     }
 
     // --- HELPER METHODS ---
@@ -203,7 +242,8 @@ public class BidirectionalWaypointGenerator : MonoBehaviour
         return false; // No intersection nodes are within the clearance distance
     }
 
-    // Responsible for instantiating a waypoint prefab at the correct position and rotation
+
+    // Instatitate and place the waypoints on the road
     // Requires a 'forwardDirection' to rotate the spawned waypoint correctly
     private void PlaceWaypoint(Vector3 rawPosition, Vector3 forwardDirection, Transform parent, string objectName)
     {
