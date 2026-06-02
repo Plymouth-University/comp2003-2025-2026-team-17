@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1734143444132235325}
   - component: {fileID: 8363323875385512821}
   - component: {fileID: 7113457967596026591}
+  - component: {fileID: -9152740979454954812}
   m_Layer: 0
   m_Name: RoadNodeMarkerPrefab
   m_TagString: Untagged
@@ -108,3 +109,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-9152740979454954812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545784058287289178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc1017ba73d05d240aa721529c16b3e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeID: 
+  isDeadEnd: 0
