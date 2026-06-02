@@ -22,26 +22,46 @@ public class Phase2_RoutingSetup : MonoBehaviour
         }
 
         // 3. Loop through every Edge and wire up the neighbor nodes
+        int connectionsMade = 0;
+
         foreach (TrafficEdge edge in allEdges)
         {
+            if (edge.startNode == null || edge.endNode == null)
+            {
+                Debug.LogWarning($"[Graph Warning] Edge '{edge.edgeName}' is missing a start or end node. Skipping this edge.");
+                continue;
+            }
+
             IntersectionNode nodeA = edge.startNode;
             IntersectionNode nodeB = edge.endNode;
 
-            // Tell Node A: "If a car wants to go to Node B, it must take this Edge."
-            if (!nodeA.routingTable.ContainsKey(nodeB))
+            // Wire Node A: "To get to B, take this edge"
+            if (!HasRoute(nodeA, nodeB))
             {
-                edge.edgeName = $"Route_{nodeA.nodeID}_to_{nodeB.nodeID}";
-                nodeA.routingTable.Add(nodeB, edge);
+                nodeA.routingTable.Add(new Route { destination = nodeB, edgeToTake = edge });
+                connectionsMade++;
             }
 
-            // Tell Node B: "If a car wants to go to Node A, it must take this Edge."
-            if (!nodeB.routingTable.ContainsKey(nodeA))
+            // Wire Node B -> "To get to A, take this edge."
+            if (!HasRoute(nodeB, nodeA))
             {
-                edge.edgeName = $"Route_{nodeB.nodeID}_to_{nodeA.nodeID}";
-                nodeB.routingTable.Add(nodeA, edge);
+                nodeB.routingTable.Add(new Route { destination = nodeA, edgeToTake = edge });
+                connectionsMade++;
             }
         }
 
         Debug.Log($"Phase 2 Complete: Successfully wired {allEdges.Length} Edges across {allNodes.Length} Nodes.");
+    }
+
+    private bool HasRoute(IntersectionNode sourceNode, IntersectionNode targetNode)
+    {
+        foreach (Route route in sourceNode.routingTable)
+        {
+            if (route.destination == targetNode)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
