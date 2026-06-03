@@ -7664,14 +7664,20 @@ MonoBehaviour:
   maxSpeed: 35
   acceleration: 15
   deceleration: 15
+  corneringSpeed: 15
+  slowDownDistance: 20
   sensorBoxSize: {x: 2, y: 3, z: 0.2}
   safeStoppingDistance: 5
   sensorOffset: {x: 0, y: 0.8, z: 2.5}
-  obstacleLayer:
+  isInsideIntersection: 0
+  vehicleLayer:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 512
+  stopLineLayer:
+    serializedVersion: 2
+    m_Bits: 128
   rotationSpeed: 10
-  waypointThreshold: 2
+  waypointThreshold: 1
   roadLayer:
     serializedVersion: 2
     m_Bits: 257

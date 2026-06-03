@@ -13,87 +13,164 @@ public class Phase1_GraphDiscovery : MonoBehaviour
     private Dictionary<SplineN, IntersectionNode> mathToAiNodeMap = new Dictionary<SplineN, IntersectionNode>();
 
     [ContextMenu("Execute Phase 1: Discover Graph")]
+    //public void DiscoverGraph()
+    //{
+    //    mathToAiNodeMap.Clear();
+    //    GameObject graphParent = new GameObject("AI_Traffic_Graph");
+
+    //    // --- STEP 1: FIND ALL INTERSECTIONS ---
+    //    RoadIntersection[] allIntersections = FindObjectsByType<RoadIntersection>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+
+    //    foreach (RoadIntersection raIntersection in allIntersections)
+    //    {
+    //        // Check if the intersection's position is valid by raycasting down to the road layer
+    //        if (!IsValidIntersectionPosition(raIntersection.transform.position, forgivenessZoneRadius))
+    //        {
+    //            Debug.LogWarning($"Skipping intersection '{raIntersection.name}' at {raIntersection.transform.position} because it doesn't appear to be above a valid road.");
+    //            continue;
+    //        }
+
+    //        // Spawn our AI marker exactly at the blue gizmo's position
+    //        GameObject newMarker = Instantiate(nodeMarkerPrefab, raIntersection.transform.position, Quaternion.identity);
+    //        newMarker.transform.SetParent(graphParent.transform);
+
+    //        IntersectionNode aiNode = newMarker.GetComponent<IntersectionNode>();
+    //        aiNode.nodeID = "Intersection_" + raIntersection.name;
+    //        aiNode.name = aiNode.nodeID;
+
+    //        // Link the RoadArchitect math nodes to our new AI Node
+    //        mathToAiNodeMap.Add(raIntersection.node1, aiNode); //
+    //        mathToAiNodeMap.Add(raIntersection.node2, aiNode); //
+    //    }
+
+    //    // --- STEP 2: FIND ALL ROADS AND SLICE THEM INTO EDGES ---
+    //    SplineC[] allRoads = FindObjectsByType<SplineC>(FindObjectsInactive.Exclude, FindObjectsSortMode.None); //
+
+    //    foreach (SplineC road in allRoads)
+    //    {
+    //        IntersectionNode lastFoundNode = null;
+    //        int lastFoundIndex = 0;
+
+    //        // Walk the spline mathematically
+    //        for (int i = 0; i < road.nodes.Count; i++) //
+    //        {
+    //            SplineN currentNode = road.nodes[i]; //
+
+    //            // Skip invalid nodes (This can happen if the road was edited in a way that broke the spline, but we still want to salvage the rest of the graph)
+    //            if (!IsValidIntersectionPosition(currentNode.pos, forgivenessZoneRadius))
+    //            {
+    //                Debug.LogWarning($"Skipping node index {i} on road '{road.name}' because it doesn't appear to be above a valid road position.");
+    //                continue;
+    //            }
+
+    //            // Is this node an intersection? Or is it the very end/start of the road (Dead End)?
+    //            bool isIntersection = currentNode.isIntersection; //
+    //            bool isDeadEnd = (i == 0 || i == road.nodes.Count - 1);
+
+    //            if (isIntersection || isDeadEnd)
+    //            {
+    //                IntersectionNode currentAiNode = null;
+
+    //                // If it's an intersection, grab the marker we spawned in Step 1
+    //                if (isIntersection && mathToAiNodeMap.ContainsKey(currentNode))
+    //                {
+    //                    currentAiNode = mathToAiNodeMap[currentNode];
+    //                }
+    //                // If it's a dead end, we need to spawn a new marker for it
+    //                else if (isDeadEnd)
+    //                {
+    //                    GameObject deadEndMarker = Instantiate(nodeMarkerPrefab, currentNode.pos, Quaternion.identity); //
+    //                    deadEndMarker.transform.SetParent(graphParent.transform);
+    //                    currentAiNode = deadEndMarker.GetComponent<IntersectionNode>();
+    //                    currentAiNode.nodeID = "DeadEnd_" + road.name + "_Index_" + i;
+    //                    currentAiNode.isDeadEnd = true;
+    //                }
+
+    //                // --- CREATE THE EDGE ---
+    //                // If we previously found a node on this road, create an Edge connecting them!
+    //                if (lastFoundNode != null && currentAiNode != null)
+    //                {
+    //                    CreateTrafficEdge(lastFoundNode, currentAiNode, road, lastFoundIndex, i, graphParent.transform);
+    //                }
+
+    //                // Update our tracker to look for the next edge
+    //                lastFoundNode = currentAiNode;
+    //                lastFoundIndex = i;
+    //            }
+    //        }
+    //    }
+    //    Debug.Log("Phase 1 Complete: Nodes Discovered and Edges Defined.");
+    //}
+
+    [ContextMenu("Execute Phase 1: Discover Graph")]
     public void DiscoverGraph()
     {
         mathToAiNodeMap.Clear();
         GameObject graphParent = new GameObject("AI_Traffic_Graph");
+
+        int deadEndCounter = 0; // --- NEW: Counter for clean naming ---
 
         // --- STEP 1: FIND ALL INTERSECTIONS ---
         RoadIntersection[] allIntersections = FindObjectsByType<RoadIntersection>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
         foreach (RoadIntersection raIntersection in allIntersections)
         {
-            // Check if the intersection's position is valid by raycasting down to the road layer
-            if (!IsValidIntersectionPosition(raIntersection.transform.position, forgivenessZoneRadius))
-            {
-                Debug.LogWarning($"Skipping intersection '{raIntersection.name}' at {raIntersection.transform.position} because it doesn't appear to be above a valid road.");
-                continue;
-            }
+            if (!IsValidIntersectionPosition(raIntersection.transform.position, forgivenessZoneRadius)) continue;
 
-            // Spawn our AI marker exactly at the blue gizmo's position
             GameObject newMarker = Instantiate(nodeMarkerPrefab, raIntersection.transform.position, Quaternion.identity);
             newMarker.transform.SetParent(graphParent.transform);
 
             IntersectionNode aiNode = newMarker.GetComponent<IntersectionNode>();
             aiNode.nodeID = "Intersection_" + raIntersection.name;
-            aiNode.name = aiNode.nodeID;
+            aiNode.name = aiNode.nodeID; // Clean Intersection Name
 
-            // Link the RoadArchitect math nodes to our new AI Node
-            mathToAiNodeMap.Add(raIntersection.node1, aiNode); //
-            mathToAiNodeMap.Add(raIntersection.node2, aiNode); //
+            mathToAiNodeMap.Add(raIntersection.node1, aiNode);
+            mathToAiNodeMap.Add(raIntersection.node2, aiNode);
         }
 
         // --- STEP 2: FIND ALL ROADS AND SLICE THEM INTO EDGES ---
-        SplineC[] allRoads = FindObjectsByType<SplineC>(FindObjectsInactive.Exclude, FindObjectsSortMode.None); //
+        SplineC[] allRoads = FindObjectsByType<SplineC>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
         foreach (SplineC road in allRoads)
         {
             IntersectionNode lastFoundNode = null;
             int lastFoundIndex = 0;
 
-            // Walk the spline mathematically
-            for (int i = 0; i < road.nodes.Count; i++) //
+            for (int i = 0; i < road.nodes.Count; i++)
             {
-                SplineN currentNode = road.nodes[i]; //
+                SplineN currentNode = road.nodes[i];
 
-                // Skip invalid nodes (This can happen if the road was edited in a way that broke the spline, but we still want to salvage the rest of the graph)
-                if (!IsValidIntersectionPosition(currentNode.pos, forgivenessZoneRadius))
-                {
-                    Debug.LogWarning($"Skipping node index {i} on road '{road.name}' because it doesn't appear to be above a valid road position.");
-                    continue;
-                }
+                if (!IsValidIntersectionPosition(currentNode.pos, forgivenessZoneRadius)) continue;
 
-                // Is this node an intersection? Or is it the very end/start of the road (Dead End)?
-                bool isIntersection = currentNode.isIntersection; //
+                bool isIntersection = currentNode.isIntersection;
                 bool isDeadEnd = (i == 0 || i == road.nodes.Count - 1);
 
                 if (isIntersection || isDeadEnd)
                 {
                     IntersectionNode currentAiNode = null;
 
-                    // If it's an intersection, grab the marker we spawned in Step 1
                     if (isIntersection && mathToAiNodeMap.ContainsKey(currentNode))
                     {
                         currentAiNode = mathToAiNodeMap[currentNode];
                     }
-                    // If it's a dead end, we need to spawn a new marker for it
                     else if (isDeadEnd)
                     {
-                        GameObject deadEndMarker = Instantiate(nodeMarkerPrefab, currentNode.pos, Quaternion.identity); //
+                        // --- NEW: Clean, sequential naming for Dead Ends ---
+                        deadEndCounter++;
+                        GameObject deadEndMarker = Instantiate(nodeMarkerPrefab, currentNode.pos, Quaternion.identity);
                         deadEndMarker.transform.SetParent(graphParent.transform);
+
                         currentAiNode = deadEndMarker.GetComponent<IntersectionNode>();
-                        currentAiNode.nodeID = "DeadEnd_" + road.name + "_Index_" + i;
+                        currentAiNode.nodeID = $"DeadEnd_Node_{deadEndCounter}";
+                        currentAiNode.name = currentAiNode.nodeID; // Fixes the (Clone) issue!
                         currentAiNode.isDeadEnd = true;
                     }
 
-                    // --- CREATE THE EDGE ---
-                    // If we previously found a node on this road, create an Edge connecting them!
                     if (lastFoundNode != null && currentAiNode != null)
                     {
                         CreateTrafficEdge(lastFoundNode, currentAiNode, road, lastFoundIndex, i, graphParent.transform);
                     }
 
-                    // Update our tracker to look for the next edge
                     lastFoundNode = currentAiNode;
                     lastFoundIndex = i;
                 }

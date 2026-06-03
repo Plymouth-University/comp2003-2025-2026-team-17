@@ -43,8 +43,8 @@ public class Phase3A_StraightWaypoints : MonoBehaviour
             }
 
             // Debugging purposes:
-            Debug.LogWarning($"Number of forward lanes in Edge '{edge.name}': {edge.forwardLanes.Count}");
-            Debug.LogWarning($"Number of oncoming lanes in Edge '{edge.name}': {edge.oncomingLanes.Count}");
+            //Debug.LogWarning($"Number of forward lanes in Edge '{edge.name}': {edge.forwardLanes.Count}");
+            //Debug.LogWarning($"Number of oncoming lanes in Edge '{edge.name}': {edge.oncomingLanes.Count}");
 
             // Get the physical start and end distances for this specific chunk of road
             float startDist = edge.parentSpline.nodes[edge.startSplineIndex].time * edge.parentSpline.distance;

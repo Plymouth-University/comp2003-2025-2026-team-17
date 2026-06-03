@@ -55,7 +55,11 @@ public class Phase3B_BezierConnectors : MonoBehaviour
                     bool isOutgoingForward = (outgoing.startNode == node);
                     var outgoingLanes = isOutgoingForward ? outgoing.forwardLanes : outgoing.oncomingLanes;
 
-                    GameObject turnFolder = new GameObject($"Turn_{incoming.name}_to_{outgoing.name}");
+                    string inDir = isIncomingForward ? "Fwd" : "Onc";
+                    string outDir = isOutgoingForward ? "Fwd" : "Onc";
+                    string turnName = $"Turn_{incoming.name}_{inDir}_to_{outgoing.name}_{outDir}";
+
+                    GameObject turnFolder = new GameObject(turnName);
                     turnFolder.transform.SetParent(node.transform);
 
                     int lanesToConnect = Mathf.Min(incomingLanes.Count, outgoingLanes.Count);
@@ -92,7 +96,9 @@ public class Phase3B_BezierConnectors : MonoBehaviour
         int calculatedWaypoints = Mathf.RoundToInt(distance / targetWaypointSpacing);
 
         // 3. The Acute Angle Rule: Even if it's a super short gap, drop at least 1 point in the middle so the AI has a target
-        if (calculatedWaypoints < 3) calculatedWaypoints = 3;
+        //if (calculatedWaypoints < 3) calculatedWaypoints = 3;
+        if (calculatedWaypoints < 1) calculatedWaypoints = 1;
+        //if (calculatedWaypoints < 2) calculatedWaypoints = 2;
 
         // --- NEW: EVEN SPACING MATH ---
         // We divide by (calculatedWaypoints + 1) so the points sit evenly inside the gap, 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 public class Phase4B_NodeDispatcher : MonoBehaviour
 {
@@ -106,14 +107,27 @@ public class Phase4B_NodeDispatcher : MonoBehaviour
                 IntersectionNode junction = currentLeg.isForward ? currentLeg.edge.endNode : currentLeg.edge.startNode;
 
                 // Find the specific turn folder generated in Phase 3B
-                string turnFolderName = $"Turn_{currentLeg.edge.name}_to_{nextLeg.edge.name}";
+                string inDir = currentLeg.isForward ? "Fwd" : "Onc";
+                string outDir = nextLeg.isForward ? "Fwd" : "Onc";
+                string turnFolderName = $"Turn_{currentLeg.edge.name}_{inDir}_to_{nextLeg.edge.name}_{outDir}";
                 Transform turnFolder = junction.transform.Find(turnFolderName);
 
                 if (turnFolder != null)
                 {
-                    Transform[] curveWaypoints = new Transform[turnFolder.childCount];
-                    for (int w = 0; w < turnFolder.childCount; w++) curveWaypoints[w] = turnFolder.GetChild(w);
-                    itinerary.Enqueue(curveWaypoints);
+                    List<Transform> correctLaneCurve = new List<Transform>();
+                    for (int w = 0; w < turnFolder.childCount; w++) 
+                    { 
+                        Transform child = turnFolder.GetChild(w);
+                        if (child.name.Contains($"_L{defaultLane}"))
+                        {
+                            correctLaneCurve.Add(child);
+                        }
+                    }
+                    if (correctLaneCurve.Count > 0) 
+                    {
+                        itinerary.Enqueue(correctLaneCurve.ToArray());
+                    }
+                        
                 }
             }
         }

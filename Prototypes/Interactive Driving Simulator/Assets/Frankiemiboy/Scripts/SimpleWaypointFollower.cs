@@ -1,18 +1,13 @@
 using UnityEngine;
-using System.Collections.Generic; // --- PHASE 4 UPGRADE: Needed for the Queue system ---
+using System.Collections.Generic;
+using RoadArchitect; // --- NEW: Required to read the intersection rects ---
 
 public class SimpleWaypointFollower : MonoBehaviour
 {
     [Header("Path Settings")]
-    [Tooltip("The Queue containing all the arrays of waypoints (Straights and Curves) to reach the destination.")]
     private Queue<Transform[]> fullItinerary = new Queue<Transform[]>();
-
-    [Tooltip("The specific array of waypoints the car is currently driving on.")]
     private Transform[] currentEdgeWaypoints;
-
-    // --- A reference back to the new Dispatcher so the car can report when finished ---
-    [HideInInspector]
-    public Phase4B_NodeDispatcher myDispatcher;
+    [HideInInspector] public Phase4B_NodeDispatcher myDispatcher;
 
     [Header("Speed Settings")]
     public float maxSpeed = 30f;
@@ -20,15 +15,25 @@ public class SimpleWaypointFollower : MonoBehaviour
     public float acceleration = 15f;
     public float deceleration = 15f;
 
+    [Header("Intersection Handling")]
+    public float corneringSpeed = 10f;
+    public float slowDownDistance = 20f;
+
     [Header("Sensor Settings (Adaptive)")]
     public Vector3 sensorBoxSize = new Vector3(2.5f, 2.5f, 0.2f);
     public float safeStoppingDistance = 5f;
     public Vector3 sensorOffset = new Vector3(0f, 0.8f, 2.5f);
-    public LayerMask obstacleLayer;
+
+    [Tooltip("Inside Intersection")]
+    public bool isInsideIntersection = false;
+    [Tooltip("The layer for physical vehicles.")]
+    public LayerMask vehicleLayer;
+    [Tooltip("The layer for traffic light stop lines.")]
+    public LayerMask stopLineLayer;
 
     [Header("Movement Settings")]
     public float rotationSpeed = 10f;
-    public float waypointThreshold = 2.0f;
+    public float waypointThreshold = 1.0f;
 
     [Header("Ground Detection")]
     public LayerMask roadLayer;
@@ -40,20 +45,40 @@ public class SimpleWaypointFollower : MonoBehaviour
     private int currentWaypointIndex = 0;
     private float currentSensorLength = 5f;
 
+    // --- NEW: Storage for the physical intersection boxes ---
+    private RoadIntersection[] allIntersections;
+
+    void Start()
+    {
+        // Grab all intersections once when the car spawns to save CPU
+        allIntersections = FindObjectsByType<RoadIntersection>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+    }
+
     void Update()
     {
-        // Safety check: Do nothing if we don't have a current edge to drive on
-        if (currentEdgeWaypoints == null || currentEdgeWaypoints.Length == 0)
-        {
-            return;
+        if (currentEdgeWaypoints == null || currentEdgeWaypoints.Length == 0) 
+        { 
+            return; 
         }
 
         Transform targetWaypoint = currentEdgeWaypoints[currentWaypointIndex];
+        Debug.DrawLine(transform.position, targetWaypoint.position, Color.yellow);
+
         float targetSpeed = maxSpeed;
 
-        // 1. Check Distance: Are we close enough to the current waypoint?
         float distanceToWaypoint = Vector3.Distance(transform.position, targetWaypoint.position);
-        
+
+        // --- NEW: PHYSICAL INTERSECTION CHECK ---
+        isInsideIntersection = IsPhysicallyInsideIntersection();
+
+        Transform endOfLegWaypoint = currentEdgeWaypoints[currentEdgeWaypoints.Length - 1];
+        float distanceToEndOfLeg = Vector3.Distance(transform.position, endOfLegWaypoint.position);
+
+        // Slow down if approaching the end of a straight road, OR if physically inside the box
+        if (distanceToEndOfLeg < slowDownDistance || isInsideIntersection)
+        {
+            targetSpeed = corneringSpeed;
+        }
 
         // --- Adaptive Front Bumper Sensor Logic (ACC) ---
         float rawStoppingDistance = (currentSpeed * 0.3f) + (currentSpeed * currentSpeed * 0.015f);
@@ -62,7 +87,10 @@ public class SimpleWaypointFollower : MonoBehaviour
 
         Vector3 sensorStartPos = transform.position + transform.TransformDirection(sensorOffset);
 
-        if (Physics.BoxCast(sensorStartPos, sensorBoxSize, transform.forward, out RaycastHit obstacleHit, transform.rotation, currentSensorLength, obstacleLayer))
+        // --- DYNAMIC SENSOR MASKING ---
+        LayerMask currentSensorMask = isInsideIntersection ? vehicleLayer : (vehicleLayer | stopLineLayer);
+
+        if (Physics.BoxCast(sensorStartPos, sensorBoxSize, transform.forward, out RaycastHit obstacleHit, transform.rotation, currentSensorLength, currentSensorMask))
         {
             if (obstacleHit.distance <= safeStoppingDistance)
             {
@@ -78,13 +106,10 @@ public class SimpleWaypointFollower : MonoBehaviour
         }
 
         // --- HANDOFF LOOP ---
-        // Switches the car from one array of waypoints to the next!
         if (distanceToWaypoint < waypointThreshold)
         {
-            // Last waypoint in current array?
             if (currentWaypointIndex >= currentEdgeWaypoints.Length - 1)
             {
-                // Check if there are still any more arrays (edges) in the Queue to drive on
                 if (fullItinerary.Count > 0)
                 {
                     currentEdgeWaypoints = fullItinerary.Dequeue();
@@ -93,11 +118,7 @@ public class SimpleWaypointFollower : MonoBehaviour
                 }
                 else
                 {
-                    // Queue is completely empty. Final destination reached!
-                    if (myDispatcher != null)
-                    {
-                        myDispatcher.DespawnCar(this.gameObject);
-                    }
+                    if (myDispatcher != null) myDispatcher.DespawnCar(this.gameObject);
                     return;
                 }
             }
@@ -140,26 +161,37 @@ public class SimpleWaypointFollower : MonoBehaviour
         transform.Translate(Vector3.forward * speedInMetersPerSecond * Time.deltaTime);
     }
 
-    // --- Route Setup Method ---
-    // The Dispatcher calls this the exact moment the car spawns to inject the GPS data
     public void SetItinerary(Queue<Transform[]> newItinerary)
     {
         fullItinerary = newItinerary;
         currentWaypointIndex = 0;
-        currentSpeed = 0f; // Reset speed so the car smoothly accelerates off the starting line
+        currentSpeed = 0f;
 
-        // Immediately load the first edge of the journey so the car has something to target!
-        if (fullItinerary.Count > 0)
-        {
-            currentEdgeWaypoints = fullItinerary.Dequeue();
-        }
-        else
-        {
-            currentEdgeWaypoints = null;
-        }
+        if (fullItinerary.Count > 0) currentEdgeWaypoints = fullItinerary.Dequeue();
+        else currentEdgeWaypoints = null;
     }
 
-    // --- Gizmos: For Visual Debugging Purposes ---
+    // --- NEW: The Physical Geometric Check ---
+    private bool IsPhysicallyInsideIntersection()
+    {
+        if (allIntersections == null || allIntersections.Length == 0) return false;
+
+        Vector3 checkPos = transform.position;
+        foreach (RoadIntersection intersection in allIntersections)
+        {
+            // Only do the expensive rectangle math if we are close to the center!
+            if (Vector3.Distance(checkPos, intersection.transform.position) < 30f)
+            {
+                // RoadArchitect's internal check requires a 'ref' vector
+                if (intersection.Contains(ref checkPos))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     void OnDrawGizmos()
     {
         Vector3 sensorStartPos = transform.position + transform.TransformDirection(sensorOffset);
