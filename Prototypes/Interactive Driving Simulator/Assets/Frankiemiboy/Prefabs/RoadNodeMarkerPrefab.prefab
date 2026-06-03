@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8363323875385512821}
   - component: {fileID: 7113457967596026591}
   - component: {fileID: -9152740979454954812}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RoadNodeMarkerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -123,3 +123,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeID: 
   isDeadEnd: 0
+  routingTable: []

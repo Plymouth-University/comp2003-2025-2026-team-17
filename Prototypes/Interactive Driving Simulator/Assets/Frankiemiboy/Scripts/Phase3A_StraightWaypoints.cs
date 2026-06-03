@@ -38,9 +38,13 @@ public class Phase3A_StraightWaypoints : MonoBehaviour
             edge.oncomingLanes.Clear();
             for (int i = 0; i < lanesPerSide; i++)
             {
-                edge.forwardLanes.Add(new List<Transform>());
-                edge.oncomingLanes.Add(new List<Transform>());
+                edge.forwardLanes.Add(new TrafficLane());
+                edge.oncomingLanes.Add(new TrafficLane());
             }
+
+            // Debugging purposes:
+            Debug.LogWarning($"Number of forward lanes in Edge '{edge.name}': {edge.forwardLanes.Count}");
+            Debug.LogWarning($"Number of oncoming lanes in Edge '{edge.name}': {edge.oncomingLanes.Count}");
 
             // Get the physical start and end distances for this specific chunk of road
             float startDist = edge.parentSpline.nodes[edge.startSplineIndex].time * edge.parentSpline.distance;
@@ -62,7 +66,7 @@ public class Phase3A_StraightWaypoints : MonoBehaviour
                     Vector3 lanePos = centerPos - (rightDir * offsetDist);
 
                     Transform wp = PlaceWaypoint(lanePos, forwardDir, edge.transform, $"WP_{edge.name}_Fwd_L{lane}_{leftIndex}", allIntersections);
-                    if (wp != null) edge.forwardLanes[lane].Add(wp);
+                    if (wp != null) edge.forwardLanes[lane].waypoints.Add(wp);
                 }
                 leftIndex++;
             }
@@ -84,7 +88,7 @@ public class Phase3A_StraightWaypoints : MonoBehaviour
                     Vector3 lanePos = centerPos + (rightDir * offsetDist);
 
                     Transform wp = PlaceWaypoint(lanePos, oncomingDir, edge.transform, $"WP_{edge.name}_Onc_L{lane}_{rightIndex}", allIntersections);
-                    if (wp != null) edge.oncomingLanes[lane].Add(wp);
+                    if (wp != null) edge.oncomingLanes[lane].waypoints.Add(wp);
                 }
                 rightIndex++;
             }

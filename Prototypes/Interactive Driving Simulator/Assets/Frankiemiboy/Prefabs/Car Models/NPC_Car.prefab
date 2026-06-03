@@ -7590,7 +7590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2358426953350888404}
   - component: {fileID: 3910714372231735135}
-  - component: {fileID: 1777037336768063440}
+  - component: {fileID: 8559414959374223256}
   m_Layer: 9
   m_Name: NPC_Car
   m_TagString: Untagged
@@ -7648,7 +7648,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1777037336768063440
+--- !u!114 &8559414959374223256
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7660,12 +7660,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1223bcd29b451be4d9ab109bc24848e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints: []
-  myManager: {fileID: 0}
+  myDispatcher: {fileID: 0}
   maxSpeed: 35
   acceleration: 15
-  deceleration: 18
-  sensorBoxSize: {x: 1.7, y: 2, z: 1}
+  deceleration: 15
+  sensorBoxSize: {x: 2.2, y: 3, z: 0.4}
   safeStoppingDistance: 5
   sensorOffset: {x: 0, y: 0.8, z: 2.5}
   obstacleLayer:
@@ -7675,7 +7674,7 @@ MonoBehaviour:
   waypointThreshold: 2
   roadLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
   raycastLength: 5
   heightOffset: 0.1
   suspensionSpeed: 15

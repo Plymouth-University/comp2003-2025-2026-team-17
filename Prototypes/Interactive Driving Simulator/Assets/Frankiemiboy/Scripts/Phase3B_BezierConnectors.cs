@@ -61,10 +61,10 @@ public class Phase3B_BezierConnectors : MonoBehaviour
                     int lanesToConnect = Mathf.Min(incomingLanes.Count, outgoingLanes.Count);
                     for (int lane = 0; lane < lanesToConnect; lane++)
                     {
-                        if (incomingLanes[lane].Count == 0 || outgoingLanes[lane].Count == 0) continue;
+                        if (incomingLanes[lane].waypoints.Count == 0 || outgoingLanes[lane].waypoints.Count == 0) continue;
 
-                        Transform startWP = incomingLanes[lane][incomingLanes[lane].Count - 1];
-                        Transform endWP = outgoingLanes[lane][0];
+                        Transform startWP = incomingLanes[lane].waypoints[incomingLanes[lane].waypoints.Count - 1];
+                        Transform endWP = outgoingLanes[lane].waypoints[0];
 
                         DrawBezierCurve(startWP, endWP, turnFolder.transform, lane);
                     }
