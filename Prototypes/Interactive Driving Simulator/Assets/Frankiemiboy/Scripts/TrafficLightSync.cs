@@ -22,9 +22,7 @@ public class TrafficLightSync : MonoBehaviour
     {
         // Convert the string names to Unity's internal integer Layer IDs for fast swapping
         stopLayerId = LayerMask.NameToLayer(stopLayerName);
-        Debug.Log($"Stop Layer '{stopLayerName}' has ID: {stopLayerId}");
         goLayerId = LayerMask.NameToLayer(goLayerName);
-        Debug.Log($"Go Layer '{goLayerName}' has ID: {goLayerId}");
 
         if (stopLayerId == -1 || goLayerId == -1)
         {
@@ -47,7 +45,6 @@ public class TrafficLightSync : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log($"Checking traffic light state for {gameObject.name}... Green Light Active: {greenLightComponent.enabled}");
             // We simply check if the green light GameObject is currently turned on!
             if (greenLightComponent.enabled && greenLightComponent.intensity > 0.01f)
             {

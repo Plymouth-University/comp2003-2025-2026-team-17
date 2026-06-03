@@ -7,7 +7,7 @@ public class Phase1_GraphDiscovery : MonoBehaviour
     [Header("References")]
     public GameObject nodeMarkerPrefab; // Must have the IntersectionNode.cs script attached!
     public LayerMask roadLayermask; // Used to ensure our raycasts only hit the road when validating intersection positions
-                                    // This will also prevent the cars from going beyond the road boundaries
+    public float forgivenessZoneRadius = 2.5f; // Sometimes RoadArchitect's math nodes can be slightly off the road, so we can use a small spherecast to forgive minor inaccuracies
 
     // A temporary map to help us link RoadArchitect's math nodes to our new AI nodes
     private Dictionary<SplineN, IntersectionNode> mathToAiNodeMap = new Dictionary<SplineN, IntersectionNode>();
@@ -24,7 +24,7 @@ public class Phase1_GraphDiscovery : MonoBehaviour
         foreach (RoadIntersection raIntersection in allIntersections)
         {
             // Check if the intersection's position is valid by raycasting down to the road layer
-            if (!IsValidIntersectionPosition(raIntersection.transform.position))
+            if (!IsValidIntersectionPosition(raIntersection.transform.position, forgivenessZoneRadius))
             {
                 Debug.LogWarning($"Skipping intersection '{raIntersection.name}' at {raIntersection.transform.position} because it doesn't appear to be above a valid road.");
                 continue;
@@ -57,7 +57,7 @@ public class Phase1_GraphDiscovery : MonoBehaviour
                 SplineN currentNode = road.nodes[i]; //
 
                 // Skip invalid nodes (This can happen if the road was edited in a way that broke the spline, but we still want to salvage the rest of the graph)
-                if (!IsValidIntersectionPosition(currentNode.pos))
+                if (!IsValidIntersectionPosition(currentNode.pos, forgivenessZoneRadius))
                 {
                     Debug.LogWarning($"Skipping node index {i} on road '{road.name}' because it doesn't appear to be above a valid road position.");
                     continue;
@@ -116,9 +116,11 @@ public class Phase1_GraphDiscovery : MonoBehaviour
     }
 
     // Check if a position is valid for an intersection by raycasting down to the road layer
-    private bool IsValidIntersectionPosition(Vector3 position)
+    private bool IsValidIntersectionPosition(Vector3 position, float forgivenessZoneRadius)
     {
-        Ray ray = new Ray(position + Vector3.up * 10f, Vector3.down);
-        return Physics.Raycast(ray, out RaycastHit hit, 20f, roadLayermask);
+        //Ray ray = new Ray(position + Vector3.up * 10f, Vector3.down);
+        //return Physics.Raycast(ray, out RaycastHit hit, 20f, roadLayermask);
+
+        return Physics.SphereCast(position + Vector3.up * 10f, forgivenessZoneRadius, Vector3.down, out RaycastHit hit, 20f, roadLayermask);
     }
 }

@@ -77,6 +77,7 @@ public class Phase4B_NodeDispatcher : MonoBehaviour
         SimpleWaypointFollower ai = car.GetComponent<SimpleWaypointFollower>();
         if (ai != null)
         {
+            ai.myDispatcher = this;
             ai.SetItinerary(compiledItinerary); // <-- This is what your Car Brain needs!
             // ai.myManager = null; // Unlink old manager
         }

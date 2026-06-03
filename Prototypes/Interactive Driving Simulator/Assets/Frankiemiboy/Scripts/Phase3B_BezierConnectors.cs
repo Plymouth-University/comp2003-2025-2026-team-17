@@ -92,7 +92,7 @@ public class Phase3B_BezierConnectors : MonoBehaviour
         int calculatedWaypoints = Mathf.RoundToInt(distance / targetWaypointSpacing);
 
         // 3. The Acute Angle Rule: Even if it's a super short gap, drop at least 1 point in the middle so the AI has a target
-        if (calculatedWaypoints < 1) calculatedWaypoints = 1;
+        if (calculatedWaypoints < 3) calculatedWaypoints = 3;
 
         // --- NEW: EVEN SPACING MATH ---
         // We divide by (calculatedWaypoints + 1) so the points sit evenly inside the gap, 

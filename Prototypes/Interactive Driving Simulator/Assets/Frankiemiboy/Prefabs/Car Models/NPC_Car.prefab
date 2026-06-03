@@ -7664,7 +7664,7 @@ MonoBehaviour:
   maxSpeed: 35
   acceleration: 15
   deceleration: 15
-  sensorBoxSize: {x: 2.2, y: 3, z: 0.4}
+  sensorBoxSize: {x: 2, y: 3, z: 0.2}
   safeStoppingDistance: 5
   sensorOffset: {x: 0, y: 0.8, z: 2.5}
   obstacleLayer:
@@ -7674,7 +7674,7 @@ MonoBehaviour:
   waypointThreshold: 2
   roadLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   raycastLength: 5
   heightOffset: 0.1
   suspensionSpeed: 15
