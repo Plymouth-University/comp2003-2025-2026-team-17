@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7787444291371246589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2101246656742173636}
+  - component: {fileID: 7532356803105805373}
+  - component: {fileID: 7378820769711724390}
+  - component: {fileID: 2136803665784660905}
+  - component: {fileID: 963158481541050211}
+  - component: {fileID: 1456071401246719421}
+  m_Layer: 0
+  m_Name: Traffic_Graph_Builder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2101246656742173636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7787444291371246589}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1210.8147, y: -55.4615, z: -2046.9939}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7532356803105805373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7787444291371246589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca8885bae9e5ff4895e085e7abecf31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeMarkerPrefab: {fileID: 545784058287289178, guid: 0f431f8c5aa5f134085055a578bb100b, type: 3}
+  roadLayermask:
+    serializedVersion: 2
+    m_Bits: 256
+  forgivenessZoneRadius: 2.5
+--- !u!114 &7378820769711724390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7787444291371246589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdacfcc87e0b1ba41a44c2b5574bdbec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2136803665784660905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7787444291371246589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b31b197acb506f41b6a57abe8e83002, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypointPrefab: {fileID: 2972855844602214790, guid: 41e06dd8b8691bb4fa15b02019381810, type: 3}
+  distanceBetweenWaypoints: 7
+  lanesPerSide: 1
+  laneWidth: 5
+  roadLayerMask:
+    serializedVersion: 2
+    m_Bits: 257
+  raycastStartHeight: 5
+--- !u!114 &963158481541050211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7787444291371246589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95fcd1ce5d6ac074b891d659a8e5fe5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypointPrefab: {fileID: 2972855844602214790, guid: 41e06dd8b8691bb4fa15b02019381810, type: 3}
+  maxControlMagnetStrength: 15
+  targetWaypointSpacing: 10
+--- !u!114 &1456071401246719421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7787444291371246589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0df2c2feeb51a245b07f0fbc7ffbf7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAlternateRoutes: 3
+  detourPenaltyMultiplier: 10

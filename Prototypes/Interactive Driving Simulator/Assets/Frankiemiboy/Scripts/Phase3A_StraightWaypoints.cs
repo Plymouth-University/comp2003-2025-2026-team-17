@@ -25,11 +25,11 @@ public class Phase3A_StraightWaypoints : MonoBehaviour
             return;
 
         }
-        if (allIntersections.Length == 0)
-        {
-            Debug.LogError("No intersections found on the Graph. Please ensure you have executed Phase 1 and 2 scripts");
-            return;
-        }
+        //if (allIntersections.Length == 0)
+        //{
+        //    Debug.LogError("No intersections found on the Graph. Please ensure you have executed Phase 1 and 2 scripts");
+        //    return;
+        //}
 
         foreach (TrafficEdge edge in allEdges)
         {
