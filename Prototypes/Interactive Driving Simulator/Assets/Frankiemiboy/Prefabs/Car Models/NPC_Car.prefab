@@ -7661,7 +7661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myDispatcher: {fileID: 0}
-  maxSpeed: 35
+  maxSpeed: 40
   acceleration: 15
   deceleration: 15
   corneringSpeed: 15
@@ -7677,7 +7677,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   rotationSpeed: 10
-  waypointThreshold: 1
+  waypointThreshold: 1.5
   roadLayer:
     serializedVersion: 2
     m_Bits: 257

@@ -6,10 +6,12 @@ public class Phase4B_NodeDispatcher : MonoBehaviour
 {
     [Header("Traffic Settings")]
     public GameObject carPrefab;
+    public int maxCarsCount = 25;
     public float spawnInterval = 4f;
     public float clearanceRadius = 5f;
     public LayerMask obstacleLayer;
 
+    private int instantiatedCarCount = 0;
     private IntersectionNode myNode;
     private RouteCache masterCache;
     private float timer = 0f;
@@ -55,23 +57,38 @@ public class Phase4B_NodeDispatcher : MonoBehaviour
         RouteGroup routeGroup = masterCache.GetRouteGroup(myNode, chosenTarget);
         if (routeGroup == null || routeGroup.alternateRoutes.Count == 0) return;
 
-        // 3. The "Driver Preference" Dice Roll (60% Main, 30% Alt1, 10% Alt2)
+        // 3. The "Driver Preference" Dice Roll (40% Main, 30% Alt1, 30% Alt2)
         int randomRoll = Random.Range(0, 100);
         CachedRoute selectedLogicalRoute = routeGroup.alternateRoutes[0]; // Default to fastest
 
-        if (routeGroup.alternateRoutes.Count > 1 && randomRoll >= 60 && randomRoll < 90)
+        if (routeGroup.alternateRoutes.Count > 1 && randomRoll >= 40 && randomRoll < 70)
             selectedLogicalRoute = routeGroup.alternateRoutes[1];
-        else if (routeGroup.alternateRoutes.Count > 2 && randomRoll >= 90)
+        else if (routeGroup.alternateRoutes.Count > 2 && randomRoll >= 70)
             selectedLogicalRoute = routeGroup.alternateRoutes[2];
 
         // 4. Compile the Logical Route into Physical Waypoints!
         Queue<Transform[]> compiledItinerary = CompilePhysicalItinerary(selectedLogicalRoute);
 
         // 5. Spawn or Pull Car from Pool
-        GameObject car = carPool.Count > 0 ? carPool.Dequeue() : Instantiate(carPrefab, transform.position, transform.rotation);
+        GameObject car = null;
 
-        car.transform.position = transform.position;
-        car.SetActive(true);
+        if (carPool.Count > 0)
+        {
+            car = carPool.Dequeue();
+            car.transform.position = transform.position;
+            car.transform.rotation = transform.rotation;
+            car.SetActive(true);
+        }
+        else if (instantiatedCarCount < maxCarsCount)
+        {
+            car = Instantiate(carPrefab, transform.position, transform.rotation);
+            instantiatedCarCount++;
+        }
+        else
+        {
+            return; // Reached max car limit and no recycled cars to use, skip spawning
+        }
+
 
         // --- HANDOFF TO CAR BRAIN ---
         // You will need to update SimpleWaypointFollower to accept a Queue<Transform[]>!
@@ -136,7 +153,10 @@ public class Phase4B_NodeDispatcher : MonoBehaviour
 
     public void DespawnCar(GameObject car)
     {
-        car.SetActive(false);
-        carPool.Enqueue(car);
+        if (car != null)
+        {
+            car.SetActive(false);
+            carPool.Enqueue(car);
+        }
     }
 }

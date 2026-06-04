@@ -62,7 +62,7 @@ public class SimpleWaypointFollower : MonoBehaviour
         }
 
         Transform targetWaypoint = currentEdgeWaypoints[currentWaypointIndex];
-        Debug.DrawLine(transform.position, targetWaypoint.position, Color.yellow);
+        //Debug.DrawLine(transform.position, targetWaypoint.position, Color.yellow); // For debugging purposes
 
         float targetSpeed = maxSpeed;
 
