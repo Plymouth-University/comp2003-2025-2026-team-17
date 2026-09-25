@@ -405,9 +405,14 @@ namespace Ezereal
 
         void Steering()
         {
+            //float adjustedspeedFactor = Mathf.InverseLerp(20, maxForwardSpeed, currentSpeed); //minimum speed affecting steerAngle is 20
+            //float adjustedTurnAngle = targetSteerAngle * (1 - adjustedspeedFactor); //based on current speed.
+            //currentSteerAngle = Mathf.Lerp(currentSteerAngle, adjustedTurnAngle, Time.deltaTime * steeringSpeed);
+
             float adjustedspeedFactor = Mathf.InverseLerp(20, maxForwardSpeed, currentSpeed); //minimum speed affecting steerAngle is 20
-            float adjustedTurnAngle = targetSteerAngle * (1 - adjustedspeedFactor); //based on current speed.
-            currentSteerAngle = Mathf.Lerp(currentSteerAngle, adjustedTurnAngle, Time.deltaTime * steeringSpeed);
+            float speedSteerMultiplier = Mathf.Lerp(1f, 0.4f, adjustedspeedFactor); // reduces steer angle by up to 50% at top speed
+
+            currentSteerAngle = targetSteerAngle * speedSteerMultiplier;
 
             frontLeftWheelCollider.steerAngle = currentSteerAngle;
             frontRightWheelCollider.steerAngle = currentSteerAngle;

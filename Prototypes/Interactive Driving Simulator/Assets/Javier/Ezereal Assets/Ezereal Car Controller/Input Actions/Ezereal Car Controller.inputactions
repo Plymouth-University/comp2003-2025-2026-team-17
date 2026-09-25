@@ -28,7 +28,7 @@
                     "name": "Accelerate",
                     "type": "Value",
                     "id": "f34630ff-e16d-4903-9335-fa0e02a81cb0",
-                    "expectedControlType": "",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -37,7 +37,7 @@
                     "name": "Brake",
                     "type": "Value",
                     "id": "68512edc-0312-4d01-b020-9719164ebf74",
-                    "expectedControlType": "",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
