@@ -192635,7 +192635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6079757352424755660, guid: 1be01b1160b1a2243b35d167fe81b109, type: 3}
       propertyPath: brakePower
-      value: 4000
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 6079757352424755660, guid: 1be01b1160b1a2243b35d167fe81b109, type: 3}
       propertyPath: horsePower
@@ -192650,12 +192650,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6079757352424755660, guid: 1be01b1160b1a2243b35d167fe81b109, type: 3}
+      propertyPath: decelerationSpeed
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079757352424755660, guid: 1be01b1160b1a2243b35d167fe81b109, type: 3}
       propertyPath: reverseGearAction
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6079757352424755660, guid: 1be01b1160b1a2243b35d167fe81b109, type: 3}
       propertyPath: maxSteeringWheelRotation
       value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079757352424755660, guid: 1be01b1160b1a2243b35d167fe81b109, type: 3}
+      propertyPath: throttleSensitivityCurve
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7275183800807910722, guid: 1be01b1160b1a2243b35d167fe81b109, type: 3}
       propertyPath: m_LocalPosition.x

@@ -41,6 +41,13 @@ namespace Ezereal
         [Header("Settings")]
         public bool isStarted = true;
 
+        [Tooltip("1 = Linear. 2 = Squared (Realistic). Higher values make the start of the pedal less sensitive.")]
+        [Range(1f, 4f)]
+        public float throttleSensitivityCurve = 2f;
+        [Tooltip("1 = Linear. 2 = Squared. Higher values soften the initial brake bite.")]
+        [Range(1f, 4f)]
+        public float brakeSensitivityCurve = 2f;
+
         public float maxForwardSpeed = 100f; // 100f default
         public float maxReverseSpeed = 30f; // 30f default
         public float horsePower = 1000f; // 100f0 default
@@ -190,8 +197,13 @@ namespace Ezereal
 
         void OnAccelerate(InputValue accelerationValue)
         {
-            currentAccelerationValue = accelerationValue.Get<float>();
-            Debug.Log("Acceleration: " + currentAccelerationValue.ToString());
+            Debug.Log("OnAccelerate called with value: " + accelerationValue.Get<float>().ToString());
+            float rawPedalValue = accelerationValue.Get<float>();
+            float normalisedPedalValue = Mathf.InverseLerp(-1f, 1f, rawPedalValue); // Normalize the pedal value to a range of 0 to 1
+            currentAccelerationValue = Mathf.Pow(normalisedPedalValue, throttleSensitivityCurve);
+            //currentAccelerationValue = accelerationValue.Get<float>();
+            //Debug.Log("Acceleration: " + currentAccelerationValue.ToString());
+            Debug.Log($"Raw: {rawPedalValue}, Normalized: {normalisedPedalValue}, Current Acceleration Value: {currentAccelerationValue}");
         }
 
         void Acceleration()
@@ -277,8 +289,15 @@ namespace Ezereal
 
         void OnBrake(InputValue brakeValue)
         {
-            currentBrakeValue = brakeValue.Get<float>();
-            //Debug.Log("Brake:" + currentBrakeValue.ToString());
+            float rawBrakeValue = brakeValue.Get<float>();
+            float normalisedBrakeValue = Mathf.InverseLerp(-1f, 1f, rawBrakeValue); // Normalize the brake value to a range of 0 to 1
+            //currentBrakeValue = brakeValue.Get<float>();
+            currentBrakeValue = Mathf.Pow(normalisedBrakeValue, brakeSensitivityCurve);
+            Debug.Log($"Raw Brake Value: {rawBrakeValue:F2} | Normalised: {normalisedBrakeValue:F2} | Current: {currentBrakeValue}");
+
+            //float rawBrakeValue = Mathf.Clamp01(brakeValue.Get<float>()); // Clamp the brake value to a range of 0 to 1
+            //currentBrakeValue = Mathf.Pow(rawBrakeValue, brakeSensitivityCurve); // Apply the sensitivity curve to the clamped value
+            //Debug.Log($"Raw Brake Value: {rawBrakeValue:F2} | Current: {currentBrakeValue}");
 
             if (isStarted && ezerealLightController != null)
             {
@@ -427,7 +446,7 @@ namespace Ezereal
         {
             if (vehicleRB != null)
             {
-                if (currentAccelerationValue == 0 && currentBrakeValue == 0 && currentHandbrakeValue == 0)
+                if (currentAccelerationValue <= 0.001f && /*currentBrakeValue == 0 &&*/ currentHandbrakeValue == 0)
                 {
 #if UNITY_6000_0_OR_NEWER
                     vehicleRB.linearVelocity = Vector3.Lerp(vehicleRB.linearVelocity, Vector3.zero, Time.deltaTime * decelerationSpeed);
